@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+  </head>
+  <body>
+    <p th:if="${sale > 50}">Sale are good!</p>
+    <p th:unless="${sale > 50}">Sale are bad!</p>
+    <p th:text="${sales > 50} ? 'Sales are good!' : 'Sales were bad!'"></p>
+    <div th:switch="${product}">
+      <p th:case="'chair'">50</p>
+      <p th:case="'table'">150</p>
+      <p th:case="*">No Match!</p>
+    </div>
+  </body>
+</html>
