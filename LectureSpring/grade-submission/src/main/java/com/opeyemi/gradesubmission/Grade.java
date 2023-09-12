@@ -1,19 +1,32 @@
 package com.opeyemi.gradesubmission;
 
+import java.util.UUID;
+
 public class Grade {
   private String name;
   private String subject;
   private String score;
+  private String id;
 
 
-  public Grade(String name, String subject, String score) {
-    this.name = name;
-    this.subject = subject;
-    this.score = score;
-  }
+  // public Grade(String name, String subject, String score, String id) {
+  //   this.name = name;
+  //   this.subject = subject;
+  //   this.score = score; 
+  //   this.id = id;
+  // }
   
 
   public Grade() {
+    this.id = UUID.randomUUID().toString();
+  }
+
+  public String getId() {
+    return this.id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
   }
 
 
@@ -41,15 +54,16 @@ public class Grade {
     this.score = score;
   }
 
-
   @Override
   public String toString() {
     return "{" +
       " name='" + getName() + "'" +
       ", subject='" + getSubject() + "'" +
       ", score='" + getScore() + "'" +
+      ", id='" + getId() + "'" +
       "}";
   }
+
 
 
 }
