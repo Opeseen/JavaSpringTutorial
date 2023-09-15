@@ -1,5 +1,6 @@
 package com.opeyemi.globalsuperstore;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -62,6 +63,11 @@ public class Item {
 
   public void setDate(Date date) {
     this.date = date;
+  }
+
+  public String getFormatDate(){
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    return formatter.format(date);
   }
 
   @Override
