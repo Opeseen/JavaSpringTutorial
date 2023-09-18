@@ -10,6 +10,7 @@ public class Grade {
   private String name;
   @NotBlank(message = "Subject field cannot be blank")
   private String subject;
+  @Score(message = "Invalid Score grade")
   private String score;
   private String id;
 
