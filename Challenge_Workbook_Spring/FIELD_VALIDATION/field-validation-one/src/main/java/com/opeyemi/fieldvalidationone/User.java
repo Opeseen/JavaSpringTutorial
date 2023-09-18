@@ -13,7 +13,6 @@ public class User {
     @NotBlank(message = "First Name field cannot be blank")
     @Size(min = 3, message = "First Name is too short")
     private String firstName;
-    @NotBlank(message = "Last Name field cannot be blank")
     private String lastName;
     @NotBlank(message = "Username field cannot be blank")
     private String userName;

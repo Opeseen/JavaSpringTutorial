@@ -22,10 +22,12 @@ public class UserController {
 
     @PostMapping("/submitItem")
     public String handleSubmit(@Valid User user, BindingResult result){
-        if (result.hasErrors()) return "sign-up";
+        if(user.getFirstName().equals(user.getLastName())) result.rejectValue("lastName","","First Name and Last Name can't be the same");
+        if (result.hasErrors()) return "sign-up";  
         userList.add(user);
         System.out.println(user);
+ 
         return "result";
-
     }
 }
+
