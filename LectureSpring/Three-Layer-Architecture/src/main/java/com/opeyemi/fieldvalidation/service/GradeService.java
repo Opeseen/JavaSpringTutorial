@@ -11,11 +11,11 @@ public class GradeService {
         return gradeRepository.getGrade(index);
     }
 
-    public void addGrade(Grade grade, String status){
+    public void addGrade(Grade grade){
         gradeRepository.addGrade(grade);
     }
 
-    public void updateGrade(Grade grade, int index, String status){
+    public void updateGrade(Grade grade, int index){
         gradeRepository.updateGrade(grade,index);
     }
 
@@ -35,15 +35,15 @@ public class GradeService {
         return index == Constant.NOT_FOUND ? new Grade() : getGrade(index);
     }
 
-    public void submitGrade(Grade grade){
+    public void submitGrade(Grade grade, String status){
         
         int index = getGradeIndex(grade.getId());
         if (index == Constant.NOT_FOUND){
-            String status = Constant.SUCCESS_STATUS;
-            addGrade(grade, status);
+            status = Constant.SUCCESS_STATUS;
+            addGrade(grade);
         }else{
-            String status = Constant.UPDATE_STATUS;
-            updateGrade(grade, index, status);
+            status = Constant.UPDATE_STATUS;
+            updateGrade(grade, index);
         }
     }
 }
