@@ -10,6 +10,7 @@ import com.opeyemi.fieldvalidation.repository.GradeRepository;
 
 public class GradeService {
     GradeRepository gradeRepository = new GradeRepository();
+    
     public Grade getGrade(int index){
         return gradeRepository.getGrade(index);
     }
