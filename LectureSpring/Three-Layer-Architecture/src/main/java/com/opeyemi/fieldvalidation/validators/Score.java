@@ -1,4 +1,4 @@
-package com.opeyemi.fieldvalidation;
+package com.opeyemi.fieldvalidation.validators;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

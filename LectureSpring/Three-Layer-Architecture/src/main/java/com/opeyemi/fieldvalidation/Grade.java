@@ -2,6 +2,8 @@ package com.opeyemi.fieldvalidation;
 
 import java.util.UUID;
 
+import com.opeyemi.fieldvalidation.validators.Score;
+
 import jakarta.validation.constraints.NotBlank;
 
 public class Grade {

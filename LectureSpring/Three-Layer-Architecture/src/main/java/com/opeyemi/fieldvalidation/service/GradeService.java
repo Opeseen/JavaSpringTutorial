@@ -1,6 +1,9 @@
 package com.opeyemi.fieldvalidation.service;
 
 import java.util.List;
+
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.opeyemi.fieldvalidation.Constant;
 import com.opeyemi.fieldvalidation.Grade;
 import com.opeyemi.fieldvalidation.repository.GradeRepository;
@@ -35,14 +38,14 @@ public class GradeService {
         return index == Constant.NOT_FOUND ? new Grade() : getGrade(index);
     }
 
-    public void submitGrade(Grade grade, String status){
+    public void submitGrade(Grade grade, RedirectAttributes  redirectAttributes){
         
         int index = getGradeIndex(grade.getId());
         if (index == Constant.NOT_FOUND){
-            status = Constant.SUCCESS_STATUS;
+            redirectAttributes.addFlashAttribute("status", Constant.SUCCESS_STATUS);
             addGrade(grade);
         }else{
-            status = Constant.UPDATE_STATUS;
+            redirectAttributes.addFlashAttribute("status", Constant.UPDATE_STATUS);
             updateGrade(grade, index);
         }
     }

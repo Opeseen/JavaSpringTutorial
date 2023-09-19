@@ -1,4 +1,4 @@
-package com.opeyemi.fieldvalidation;
+package com.opeyemi.fieldvalidation.validators;
 
 import java.util.Arrays;
 import java.util.List;

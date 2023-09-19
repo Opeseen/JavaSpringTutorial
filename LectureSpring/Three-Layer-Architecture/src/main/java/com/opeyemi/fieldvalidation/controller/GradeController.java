@@ -27,7 +27,7 @@ public class GradeController {
   @PostMapping("/handleSubmit")
   public String SubmitForm(@Valid Grade grade, BindingResult result, RedirectAttributes redirectAttributes){
     if (result.hasErrors()) return "form";
-    gradeService.submitGrade(grade);
+    gradeService.submitGrade(grade, redirectAttributes);
     return "redirect:/grade";
   }
 
