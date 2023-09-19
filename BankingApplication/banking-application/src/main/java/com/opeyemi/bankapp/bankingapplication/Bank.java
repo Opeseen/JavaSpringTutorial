@@ -6,6 +6,8 @@ public class Bank {
     private String username;
     private String email;
     private String contactAddress;
+    private String password;
+    private String confirmPassword;
 
     public Bank() {
     }
@@ -51,6 +53,23 @@ public class Bank {
         this.contactAddress = contactAddress;
     }
 
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return this.confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -59,8 +78,9 @@ public class Bank {
             ", username='" + getUsername() + "'" +
             ", email='" + getEmail() + "'" +
             ", contactAddress='" + getContactAddress() + "'" +
+            ", password='" + getPassword() + "'" +
+            ", confirmPassword='" + getConfirmPassword() + "'" +
             "}";
     }
-
 
 }
