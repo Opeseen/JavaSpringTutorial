@@ -2,7 +2,6 @@ package com.opeyemi.fieldvalidation.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -12,8 +11,11 @@ import com.opeyemi.fieldvalidation.repository.GradeRepository;
 
 @Service
 public class GradeService {
-    @Autowired
     GradeRepository gradeRepository;
+
+    public GradeService(GradeRepository gradeRepository){
+        this.gradeRepository = gradeRepository;
+    }
     
     public Grade getGrade(int index){
         return gradeRepository.getGrade(index);
