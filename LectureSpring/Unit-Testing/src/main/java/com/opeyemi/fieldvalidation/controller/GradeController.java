@@ -7,7 +7,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.opeyemi.fieldvalidation.pojo.Grade;
 import com.opeyemi.fieldvalidation.service.GradeService;
@@ -27,9 +26,9 @@ public class GradeController {
   }
 
   @PostMapping("/handleSubmit")
-  public String SubmitForm(@Valid Grade grade, BindingResult result, RedirectAttributes redirectAttributes){
+  public String SubmitForm(@Valid Grade grade, BindingResult result){
     if (result.hasErrors()) return "form";
-    gradeService.submitGrade(grade, redirectAttributes);
+    gradeService.submitGrade(grade);
     return "redirect:/grade";
   }
 

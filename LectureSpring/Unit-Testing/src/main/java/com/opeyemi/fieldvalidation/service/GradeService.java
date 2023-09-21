@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.opeyemi.fieldvalidation.Constant;
 import com.opeyemi.fieldvalidation.pojo.Grade;
@@ -43,14 +42,12 @@ public class GradeService {
         return index == Constant.NOT_FOUND ? new Grade() : getGrade(index);
     }
 
-    public void submitGrade(Grade grade, RedirectAttributes  redirectAttributes){
+    public void submitGrade(Grade grade){
         
         int index = getGradeIndex(grade.getId());
         if (index == Constant.NOT_FOUND){
-            redirectAttributes.addFlashAttribute("status", Constant.SUCCESS_STATUS);
             addGrade(grade);
         }else{
-            redirectAttributes.addFlashAttribute("status", Constant.UPDATE_STATUS);
             updateGrade(grade, index);
         }
     }

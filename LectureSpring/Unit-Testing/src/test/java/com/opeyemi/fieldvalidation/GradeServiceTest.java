@@ -1,6 +1,8 @@
 package com.opeyemi.fieldvalidation;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -51,5 +53,42 @@ public class GradeServiceTest {
         assertEquals(0, valid);
         assertEquals(Constant.NOT_FOUND, notvalid);
     }
+
+    @Test
+    public void returnGradeByIdTest(){
+        Grade grade = new Grade("Harry","Potions","C");
+        when(gradeRepository.getGrades()).thenReturn(Arrays.asList(grade));
+        when(gradeRepository.getGrade(0)).thenReturn(grade);
+
+        String id = grade.getId();
+        Grade result = gradeService.getGradeById(id);
+
+        assertEquals(grade, result);
+    }
+
+    @Test
+    public void addGradeTest(){
+        Grade grade = new Grade("Harry","Potions","C");
+        when(gradeRepository.getGrades()).thenReturn(Arrays.asList(grade));
+        when(gradeRepository.getGrade(0)).thenReturn(grade);
+
+        Grade newGrade = new Grade("Mike","CRS","A");
+        gradeService.submitGrade(newGrade);
+        verify(gradeRepository, times(1)).addGrade(newGrade);  
+
+    }
+
+    @Test
+    public void updateGradeTest(){
+        Grade grade = new Grade("Harry","Potions","C");
+        when(gradeRepository.getGrades()).thenReturn(Arrays.asList(grade));
+        when(gradeRepository.getGrade(0)).thenReturn(grade);
+
+        grade.setScore("A");
+        gradeService.submitGrade(grade);
+        verify(gradeRepository, times(1)).updateGrade(grade, 0);
+
+    }
+
 
 }
