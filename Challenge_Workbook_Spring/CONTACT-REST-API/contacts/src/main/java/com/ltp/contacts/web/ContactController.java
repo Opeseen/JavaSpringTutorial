@@ -25,13 +25,13 @@ public class ContactController {
     private ContactService contactService;
 
     @GetMapping("/contact/{id}")
-    public ResponseEntity<Contact> getContact(@PathVariable String id){
+    public ResponseEntity<Object>getContact(@PathVariable String id){
         Contact contact;
         try {
             contact = contactService.getContactById(id);
-            return new ResponseEntity<Contact>(contact, HttpStatus.OK);
+            return new ResponseEntity<Object>(contact, HttpStatus.OK);
         } catch (NoContactException e) {
-            return new ResponseEntity<Contact>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(Constants.GET_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -43,7 +43,7 @@ public class ContactController {
     
     
     @PostMapping("/contact")
-    public ResponseEntity<String> createContact(@RequestBody Contact contact){
+    public ResponseEntity<Object> createContact(@RequestBody Contact contact){
         contactService.saveContact(contact);
         return new ResponseEntity<>(Constants.POST_SUCCESSFUL,HttpStatus.CREATED);
     }
