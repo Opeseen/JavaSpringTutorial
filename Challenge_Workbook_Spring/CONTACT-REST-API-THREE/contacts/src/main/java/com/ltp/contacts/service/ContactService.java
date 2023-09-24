@@ -9,5 +9,5 @@ public interface ContactService {
     void saveContact(Contact contact);
     void updateContact(String id, Contact contact);
     void deleteContact(String id);
-    List<Contact> geContacts();
+    List<Contact> getContacts();
 }

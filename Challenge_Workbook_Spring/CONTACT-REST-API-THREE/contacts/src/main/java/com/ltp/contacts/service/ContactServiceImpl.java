@@ -36,7 +36,7 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public List<Contact> geContacts() {
+    public List<Contact> getContacts() {
         return contactRepository.getContacts();
     }
 

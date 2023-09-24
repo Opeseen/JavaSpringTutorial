@@ -33,7 +33,7 @@ public class ContactController {
 
     @GetMapping("/contact/all")
     public ResponseEntity<List<Contact>> getAllContacts(){
-        List<Contact> contacts = contactService.geContacts();
+        List<Contact> contacts = contactService.getContacts();
         return new ResponseEntity<List<Contact>>(contacts, null, HttpStatus.OK);
     }
     
