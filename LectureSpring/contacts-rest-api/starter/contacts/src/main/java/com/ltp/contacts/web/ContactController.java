@@ -1,9 +1,7 @@
 package com.ltp.contacts.web;
 
-import java.lang.constant.Constable;
 import java.util.List;
 
-import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ltp.contacts.Constants;
 import com.ltp.contacts.pojo.Contact;
 import com.ltp.contacts.service.ContactService;
 
@@ -39,9 +36,10 @@ public class ContactController {
     
     
     @PostMapping("/contact")
-    public ResponseEntity<String> createContact(@RequestBody Contact contact){
+    public ResponseEntity<Contact> createContact(@RequestBody Contact contact){
         contactService.saveContact(contact);
-        return new ResponseEntity<>(Constants.POST_SUCCESSFUL,HttpStatus.CREATED);
+        // return new ResponseEntity<>(Constants.POST_SUCCESSFUL,HttpStatus.CREATED);
+        return new ResponseEntity<>(contact,HttpStatus.CREATED);
     }
 
     @PutMapping("/contact/{id}")
