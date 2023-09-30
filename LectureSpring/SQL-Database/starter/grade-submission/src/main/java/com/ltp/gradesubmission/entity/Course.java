@@ -1,42 +1,38 @@
 package com.ltp.gradesubmission.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.*;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@Entity
+@Table(name = "course")
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class Course {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+
+    @NonNull
+    @Column(name = "subject",nullable = false)
     private String subject;
+    
+    @NonNull
+    @Column(name = "code", nullable = false)
     private String code;
+    
+    @NonNull
+    @Column(name = "description", nullable = false)
     private String description;
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getSubject() {
-        return this.subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getCode() {
-        return this.code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
 }
