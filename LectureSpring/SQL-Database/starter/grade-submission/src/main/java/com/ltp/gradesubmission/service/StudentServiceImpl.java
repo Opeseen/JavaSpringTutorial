@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ltp.gradesubmission.entity.Grade;
 import com.ltp.gradesubmission.entity.Student;
-import com.ltp.gradesubmission.exception.StudentNotFoundException;
+import com.ltp.gradesubmission.exception.StudentUnfoundException;
 import com.ltp.gradesubmission.repository.StudentRepository;
 
 import lombok.AllArgsConstructor;
@@ -20,12 +20,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student getStudent(Long id) {
-        printGrades(studentRepository.findById(id).get());
         Optional<Student> student = studentRepository.findById(id);
         if(student.isPresent()){
             return student.get();
         }else{
-            throw new StudentNotFoundException(id);
+            throw new StudentUnfoundException(id);
         }
     }
 
@@ -44,6 +43,7 @@ public class StudentServiceImpl implements StudentService {
         return (List<Student>) studentRepository.findAll();
     }
 
+    // Just For Testing
     void printGrades(Student student){
         for(Grade grade : student.getGrades()){
             System.out.println(grade.getScore());

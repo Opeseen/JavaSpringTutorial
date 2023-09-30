@@ -25,6 +25,7 @@ public class GradeServiceImpl implements GradeService {
     StudentRepository studentRepository;
     CourseRepository courseRepository;
     
+    
     @Override
     public Grade getGrade(Long studentId, Long courseId) {
         Optional<Grade> grade =  gradeRepository.findByStudentIdAndCourseId(studentId, courseId);
