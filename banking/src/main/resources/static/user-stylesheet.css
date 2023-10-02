@@ -142,3 +142,18 @@ body {
   font-style: italic;
   text-decoration: none;
 }
+
+.modifyNote.blue{
+  background-color: blue !important;
+  color: #fff;
+  border-radius: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
+  padding: 12px;
+  width: 250px;
+  font-style: italic;
+  text-decoration: none;
+}
+
