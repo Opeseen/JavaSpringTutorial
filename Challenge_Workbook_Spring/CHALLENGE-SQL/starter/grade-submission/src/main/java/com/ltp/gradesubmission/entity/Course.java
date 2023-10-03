@@ -1,6 +1,7 @@
 package com.ltp.gradesubmission.entity;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-import org.hibernate.annotations.JoinFormula;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,6 +25,7 @@ import lombok.*;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
+@ToString
 @Table(name = "course")
 public class Course {
 
@@ -57,6 +58,6 @@ public class Course {
         joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id")
     )
-    private List<Student> students;
+    private Set<Student> students;
 
 }

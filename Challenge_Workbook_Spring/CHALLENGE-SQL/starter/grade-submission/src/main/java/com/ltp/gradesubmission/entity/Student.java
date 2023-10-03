@@ -15,8 +15,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 
-import org.hibernate.annotations.ManyToAny;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.*;
@@ -26,6 +24,7 @@ import lombok.*;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
+@ToString
 @Table(name = "student")
 public class Student {
 
@@ -48,6 +47,7 @@ public class Student {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Grade> grades;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "students")
     private List<Course> courses;
 

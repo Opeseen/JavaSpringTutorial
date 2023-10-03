@@ -19,6 +19,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@ToString
 @Table(name = "grade", uniqueConstraints={
     @UniqueConstraint(columnNames = {"student_id", "course_id"})
 }) 

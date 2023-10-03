@@ -1,0 +1,3 @@
+Course(id=1, subject=Charms, code=CH104,
+ description=In this class, you will learn spells concerned with giving an object new and unexpected properties.,
+ grades=[], students=[Student(id=5, name=Opeyemi Alabi, birthDate=1989-07-30, grades=[], courses=[])])
