@@ -52,6 +52,7 @@ public class Course {
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Grade> grades;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
         name = "course_student", 
