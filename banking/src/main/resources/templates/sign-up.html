@@ -6,7 +6,7 @@
     </head>
     <body>
         <div class="topnav">
-            <a th:href="@{/}">Form</a>
+            <a th:href="@{/user/signup}">Form</a>
             <a th:href="@{/login}">Login</a>
         </div>  
         <div class="alert success" th:if="${status} == 'success' ">
@@ -17,7 +17,7 @@
         </div>
         <div class="container">
             <h2>Account registration</h2>
-            <form method="post" th:object="${userSetup}" th:action="@{/submit-registration}">
+            <form method="post" th:object="${userSetup}" th:action="@{/user/register}">
                 <p style="color: red;" th:errors="*{firstName}"></p>
                 <input type="text" placeholder="First Name" th:field="*{firstName}">
                 <p style="color: red;" th:errors="*{lastName}"></p>

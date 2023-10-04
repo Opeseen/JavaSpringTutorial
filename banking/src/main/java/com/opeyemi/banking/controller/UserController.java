@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.opeyemi.banking.entity.User;
@@ -18,27 +19,27 @@ import lombok.*;
 @AllArgsConstructor
 @Controller
 
-
+@RequestMapping("/user")
 public class UserController {
   UserService userService;
 
-  @GetMapping("/")
+  @GetMapping("/signup")
   public String UserForm(Model model){
     model.addAttribute("userSetup", new UserSetup());
     return "sign-up";
   }
 
   // Controller to register user
-  @PostMapping("/submit-registration")
+  @PostMapping("/register")
   public String registrationHandler(@Valid UserSetup userSetup, BindingResult result, RedirectAttributes redirectAttributes){
     if(!userSetup.getPassword().equals(userSetup.getConfirmPassword())) result.rejectValue("confirmPassword", "", "Password do not match");
     if (result.hasErrors()) return "sign-up";
     if(userService.createUser(userSetup)){
       redirectAttributes.addFlashAttribute("status", Constants.SUCCESS_STATUS);
-      return "redirect:/";
+      return "redirect:/user/signup";
     }else{
       redirectAttributes.addFlashAttribute("status", Constants.USER_ALREADY_EXISTS);
-      return "redirect:/";
+      return "redirect:/user/signup";
     }  
   }
 
