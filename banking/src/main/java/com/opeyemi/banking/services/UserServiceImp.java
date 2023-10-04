@@ -5,8 +5,8 @@ import java.util.*;
 import org.springframework.stereotype.Service;
 
 import com.opeyemi.banking.entity.User;
-import com.opeyemi.banking.entity.UserSetup;
 import com.opeyemi.banking.helpers.Helpers;
+import com.opeyemi.banking.helpers.UserSetup;
 import com.opeyemi.banking.repository.UserRepository;
 import com.opeyemi.banking.validators.Constants;
 

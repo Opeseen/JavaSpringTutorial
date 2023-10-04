@@ -6,14 +6,14 @@
     </head>
     <body>
         <div class="topnav">
-            <a th:href="@{/}">Form</a>
+            <a th:href="@{/user/signup}">Form</a>
         </div>  
         <div class="container">
             <div class="alert" th:if="${status} == 'failed' ">
                 <strong>Login Failed - Incorrect Credentials</strong>
             </div>
             <h2>Login page</h2>
-            <form method="post" th:object="${user}" th:action="@{/submitLoginDetails}">
+            <form method="post" th:object="${user}" th:action="@{/user/submitLoginDetails}">
                 <p style="color: red;" th:errors="*{username}"></p>
                 <input type="text" placeholder="Enter your username" th:field="*{username}">
                 <p style="color: red;" th:errors="*{password}"></p>
