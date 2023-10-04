@@ -17,6 +17,6 @@ public class TransactionRequest {
   private String transType;
 
   @NotBlank(message = "DEscription cannot be blank")
-  private String descrition;
+  private String description;
 
 }
