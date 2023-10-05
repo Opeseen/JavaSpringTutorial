@@ -1,5 +1,6 @@
 package com.opeyemi.banking.entity;
 
+import java.util.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.*;
+
 
 @Builder
 @Getter
@@ -35,9 +37,9 @@ public class Transactions {
 	private String transType;
 
 	@Column(name = "description")
-	private String descrition;
+	private String description;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
-	private User user;
+	private User users;
 }

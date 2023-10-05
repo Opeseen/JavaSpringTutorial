@@ -55,13 +55,13 @@ public class UserServiceImp implements UserService{
 
     Transactions newTransaction = Transactions.builder()
       .amount(transactionRequest.getAmount())
-      .descrition(transactionRequest.getDescription())
+      .description(transactionRequest.getDescription())
       .transType("Credit")
       .build();
     
     user.setBalance(Helpers.creditExistingBalance(currentUserBalance, transactionRequest.getAmount()));
     userRepository.save(user);
-    newTransaction.setUser(user);
+    newTransaction.setUsers(user);
     return transactionRepository.save(newTransaction);
   }
 
@@ -72,6 +72,19 @@ public class UserServiceImp implements UserService{
       return user.get();
     }
     return null;
+  }
+
+  @Override
+  public List<Transactions> getUserTransactionHistory(String Id){
+    List<Transactions> trans = transactionRepository.findByUsersId(Long.parseLong(Id));
+    System.out.println(trans.getClass());
+    System.out.println(trans.get(0));
+    // for(int x = 0; x < trans.size(); x++){
+    //   System.out.println(trans.get(x).getUsers().getId());
+    // }
+    // trans.stream().
+    //     forEachOrdered(System.out::println);
+    return transactionRepository.findByUsersId(Long.parseLong(Id));
   }
   
   @Override

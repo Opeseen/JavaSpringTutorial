@@ -1,12 +1,17 @@
 package com.opeyemi.banking.entity;
 
 import java.math.BigDecimal;
+import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import lombok.*;
@@ -50,5 +55,8 @@ public class User {
   @Column(name = "balance")
   private BigDecimal Balance;
 
+  @JsonIgnore
+  @OneToMany(mappedBy = "users", cascade = CascadeType.ALL )
+  private List<Transactions> transactions;
   
 }
