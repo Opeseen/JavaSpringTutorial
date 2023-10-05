@@ -34,7 +34,7 @@ public class Transactions {
 	@Column(name = "trans_type")
 	private String transType;
 
-	@Column(name = "description", unique = true)
+	@Column(name = "description")
 	private String descrition;
 
 	@ManyToOne(optional = false)

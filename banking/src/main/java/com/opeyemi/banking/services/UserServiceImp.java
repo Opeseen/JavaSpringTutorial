@@ -1,12 +1,16 @@
 package com.opeyemi.banking.services;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 import org.springframework.stereotype.Service;
 
+import com.opeyemi.banking.entity.Transactions;
 import com.opeyemi.banking.entity.User;
 import com.opeyemi.banking.helpers.Helpers;
+import com.opeyemi.banking.helpers.TransactionRequest;
 import com.opeyemi.banking.helpers.UserSetup;
+import com.opeyemi.banking.repository.TransactionRepository;
 import com.opeyemi.banking.repository.UserRepository;
 import com.opeyemi.banking.validators.Constants;
 
@@ -18,6 +22,7 @@ import lombok.*;
 public class UserServiceImp implements UserService{
   
   UserRepository userRepository;
+  TransactionRepository transactionRepository;
 
   @Override
   public Boolean createUser(UserSetup request){
@@ -40,6 +45,24 @@ public class UserServiceImp implements UserService{
     userRepository.save(newUser);
     return true;
 
+  }
+
+  @Override
+  public Transactions processCreditTransaction(TransactionRequest transactionRequest, String Id){
+    if(fetchUser(Long.parseLong(Id)) == null) return null;
+    User user = fetchUser(Long.parseLong(Id));
+    BigDecimal currentUserBalance = user.getBalance();
+
+    Transactions newTransaction = Transactions.builder()
+      .amount(transactionRequest.getAmount())
+      .descrition(transactionRequest.getDescription())
+      .transType("Credit")
+      .build();
+    
+    user.setBalance(Helpers.creditExistingBalance(currentUserBalance, transactionRequest.getAmount()));
+    userRepository.save(user);
+    newTransaction.setUser(user);
+    return transactionRepository.save(newTransaction);
   }
 
   @Override

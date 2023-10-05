@@ -1,5 +1,7 @@
 package com.opeyemi.banking.entity;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -46,7 +48,7 @@ public class User {
   private String AccountNumber;
 
   @Column(name = "balance")
-  private Double Balance;
+  private BigDecimal Balance;
 
   
 }

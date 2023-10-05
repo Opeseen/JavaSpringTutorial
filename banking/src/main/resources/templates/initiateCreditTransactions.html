@@ -8,11 +8,11 @@
         </div>
         <div class="container">    
             <h2> Fund Your Account </h2>
-            <form method="post" th:object="${credit}" th:action="@{/#}">
+            <form method="post" th:object="${credit}" th:action="@{/user/transaction/credit/{Id}(Id = ${Id})}">
                 <!-- <input type="text" th:field="*{AccountNumber}"> -->
                 <input class="half" type="text" placeholder="Enter Amount" th:field="*{amount}">
                 <input class="half" type="text" placeholder="Description" th:field="*{description}">
-                <input type="submit" value="Submit-Transaction">
+                <input type="submit" value="Submit Transaction">
             </form>
         </div>      
     </body>

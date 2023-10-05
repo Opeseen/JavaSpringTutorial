@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.opeyemi.banking.entity.User;
@@ -74,10 +73,20 @@ public class UserController {
     
   }
 
-  @GetMapping("/transaction/debit")
-  public String debitRequestPage(Model model, @RequestParam(required = false) String Id){
+  @GetMapping("/transaction/credit/{Id}")
+  public String debitRequestPage(Model model, @PathVariable(required = false) Long Id){
     model.addAttribute("credit", new TransactionRequest());
     return "initiateCreditTransactions";
+  }
+
+  @PostMapping("/transaction/credit/{Id}")
+  public String submitDebitRequest(TransactionRequest transactionRequest, Model model, @PathVariable String Id){
+    if(userService.processCreditTransaction(transactionRequest, Id) != null){
+      return "result";
+    }else{
+      return "redirect:/user/signup";
+    }  
+    
   }
 
 }

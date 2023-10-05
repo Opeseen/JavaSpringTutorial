@@ -1,5 +1,7 @@
 package com.opeyemi.banking.helpers;
 
+import java.math.BigDecimal;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -33,10 +35,10 @@ public class UserSetup {
   
   private String AccountNumber;
 
-  private Double Balance;
+  private BigDecimal Balance;
 
   public UserSetup() {
-    this.Balance = 0.0;
+    this.Balance = new BigDecimal(0.0);
   }
 
 

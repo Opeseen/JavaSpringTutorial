@@ -32,7 +32,7 @@
       </table>
       <br> <br> <br> <br> <br> <br> <br> <br>
       <div class="inputWrapper ctaWrapper" th:each="userInfo: ${user}">
-        <a class="modifyNote green" th:href="@{/user/transaction/debit(id = ${userInfo.Id})}"> Deposit</a>
+        <a class="modifyNote green" th:href="@{/user/transaction/credit/{id}(id = ${userInfo.id})}"> Deposit</a>
         <a class="modifyNote red" id="" href="#">Withdrawal</a>
         <a class="modifyNote blue" id="" href="#">Transaction History</a>
       </div>

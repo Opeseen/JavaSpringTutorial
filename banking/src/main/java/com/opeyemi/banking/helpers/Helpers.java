@@ -1,5 +1,7 @@
 package com.opeyemi.banking.helpers;
 
+import java.math.BigDecimal;
+
 public class Helpers {
   public static String generateAcccountNumber() {
     int n = 10;
@@ -11,5 +13,10 @@ public class Helpers {
     }
     return sb.toString();
   }
-  
+
+  public static BigDecimal creditExistingBalance(BigDecimal currentBalance, String amountToCredit){
+    BigDecimal creditAmout = new BigDecimal(amountToCredit);
+    return currentBalance.add(creditAmout);
+  }
+
 }
