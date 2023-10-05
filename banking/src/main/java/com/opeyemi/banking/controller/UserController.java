@@ -6,7 +6,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.opeyemi.banking.entity.Transactions;
@@ -79,14 +81,14 @@ public class UserController {
 
   // Handler to navigate to the ucer to credit account page 
   @GetMapping("/transaction/credit/{Id}")
-  public String debitRequestPage(Model model, @PathVariable(required = false) Long Id){
+  public String creditRequestPage(Model model, @PathVariable(required = false) Long Id){
     model.addAttribute("credit", new TransactionRequest());
     return "initiateCreditTransactions";
   }
 
   // Handler to submit the user credit request
   @PostMapping("/transaction/credit/{Id}/submit")
-  public String submitDebitRequest(TransactionRequest transactionRequest, Model model, @PathVariable String Id){
+  public String submitCreditRequest(TransactionRequest transactionRequest, Model model, @PathVariable String Id){
     if(userService.processCreditTransaction(transactionRequest, Id) != null){
       return "redirect:/user/dashboard/" + Id;
     }else{
@@ -98,15 +100,13 @@ public class UserController {
   @GetMapping("/{Id}/transaction/history")
   public String showUserTransactions(Model model, @PathVariable String Id){
     List<Transactions> userTransactions = userService.getUserTransactionHistory(Id);
-    // If no list of transactions founf - display an enpty list 
+    // If no list of transactions found - display an enpty list 
     if(userTransactions.isEmpty()){
       model.addAttribute("transactions", new Transactions());
       return "transactions";
     }else{
       // Map the list of transaction to the model fot thymleaf to process it.
-    //   for (Transactions country : userTransactions) {
-    //     System.out.println(country); 
-    // }
+
       model.addAttribute("transactions", userTransactions);
       return "transactions";
     }

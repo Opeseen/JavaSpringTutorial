@@ -77,13 +77,7 @@ public class UserServiceImp implements UserService{
   @Override
   public List<Transactions> getUserTransactionHistory(String Id){
     List<Transactions> trans = transactionRepository.findByUsersId(Long.parseLong(Id));
-    System.out.println(trans.getClass());
-    System.out.println(trans.get(0));
-    // for(int x = 0; x < trans.size(); x++){
-    //   System.out.println(trans.get(x).getUsers().getId());
-    // }
-    // trans.stream().
-    //     forEachOrdered(System.out::println);
+    
     return transactionRepository.findByUsersId(Long.parseLong(Id));
   }
   
