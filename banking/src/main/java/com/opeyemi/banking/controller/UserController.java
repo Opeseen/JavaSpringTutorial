@@ -79,7 +79,7 @@ public class UserController {
     return "initiateCreditTransactions";
   }
 
-  @PostMapping("/transaction/credit/{Id}")
+  @PostMapping("/transaction/credit/{Id}/submit")
   public String submitDebitRequest(TransactionRequest transactionRequest, Model model, @PathVariable String Id){
     if(userService.processCreditTransaction(transactionRequest, Id) != null){
       return "result";
