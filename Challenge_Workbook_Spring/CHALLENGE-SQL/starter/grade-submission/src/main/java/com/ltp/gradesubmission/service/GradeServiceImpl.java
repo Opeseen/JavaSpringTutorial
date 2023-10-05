@@ -1,13 +1,8 @@
 package com.ltp.gradesubmission.service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.util.*;
+
 import com.ltp.gradesubmission.entity.Course;
 import com.ltp.gradesubmission.entity.Grade;
 import com.ltp.gradesubmission.entity.Student;
@@ -16,11 +11,9 @@ import com.ltp.gradesubmission.exception.StudentNotEnrolledException;
 import com.ltp.gradesubmission.repository.CourseRepository;
 import com.ltp.gradesubmission.repository.GradeRepository;
 import com.ltp.gradesubmission.repository.StudentRepository;
-import java.util.Optional;
 
 import lombok.AllArgsConstructor;
 
-import org.hibernate.type.LocalDateType;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
