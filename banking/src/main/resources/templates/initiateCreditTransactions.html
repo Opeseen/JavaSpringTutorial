@@ -10,8 +10,6 @@
                 <a class="modifyNote green" th:if="${userInfo.id != null}" th:href="@{/user/{id}/dashboard(id = ${userInfo.id})}"> Dashboard</a>
               </a>
             </div>
-            <!-- <a class="active" th:href="@{/user/{id}/dashboard(id = ${userInfo.Id})}">Dashboard</a> -->
-            <!-- <a class="active" th:href="@{/}">Dashboard</a> -->
           
             <div class="container">
             <div class="alert" th:if="${status} == 'failed' ">
