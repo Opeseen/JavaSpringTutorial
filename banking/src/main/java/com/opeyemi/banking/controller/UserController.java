@@ -62,14 +62,14 @@ public class UserController {
     if(userConfirmation != null){
       model.addAttribute("user", userConfirmation);
       redirectAttributes.addFlashAttribute("status", Constants.SUCCESS_STATUS);
-      return "redirect:/user/dashboard/" + userConfirmation.getId();
+      return "redirect:/user/"+ userConfirmation.getId() + "/dashboard";
     }else{
       redirectAttributes.addFlashAttribute("status", Constants.FAILED_STATUS);
       return "redirect:/user/login";
     }
   }
   // Handler to shou the User dashboard
-  @GetMapping("/dashboard/{Id}")
+  @GetMapping("/{Id}/dashboard")
   public String dashboardPage(User user, Model model, @PathVariable(required = false) Long Id){
     // If user id not found - return empty - else return the user details
     model.addAttribute("user", userService.fetchUser(Id) == null ? new User() : userService.fetchUser(Id));
@@ -78,19 +78,22 @@ public class UserController {
   }
 
   // Handler to navigate to the ucer to credit account page 
-  @GetMapping("/transaction/credit/{Id}")
-  public String creditRequestPage(Model model, @PathVariable(required = false) Long Id){
+  @GetMapping("/{Id}/transaction/credit")
+  public String creditRequestPage(Model model, @PathVariable Long Id){
+    User user = userService.fetchUser(Id);
     model.addAttribute("credit", new TransactionRequest());
+    model.addAttribute("user", user);
     return "initiateCreditTransactions";
   }
 
   // Handler to submit the user credit request
-  @PostMapping("/transaction/credit/{Id}/submit")
-  public String submitCreditRequest(TransactionRequest transactionRequest, Model model, @PathVariable(required = false) String Id){
+  @PostMapping("/{Id}/transaction/credit/submit")
+  public String submitCreditRequest(TransactionRequest transactionRequest, Model model, @PathVariable(required = false) String Id, RedirectAttributes redirectAttributes){
     if(userService.processCreditTransaction(transactionRequest, Id) != null){
-      return "redirect:/user/dashboard/" + Id;
+      return "redirect:/user/" + Id + "/dashboard";
     }else{
-      return "result";
+      redirectAttributes.addFlashAttribute("status", Constants.FAILED_STATUS);
+      return "redirect:/user/" + Id + "/transaction/credit";
     }  
     
   }
@@ -98,13 +101,15 @@ public class UserController {
   @GetMapping("/{Id}/transaction/history")
   public String showUserTransactions(Model model, @PathVariable String Id){
     List<Transactions> userTransactions = userService.getUserTransactionHistory(Id);
+    User user = userService.fetchUser(Long.parseLong(Id));
     // If no list of transactions found - display an enpty list 
     if(userTransactions.isEmpty()){
       model.addAttribute("transactions", new Transactions());
+      model.addAttribute("user", user);
       return "transactions";
     }else{
-      // Map the list of transaction to the model fot thymleaf to process it.
-
+      // Map the list of transaction to the model for thymleaf to process it.
+      model.addAttribute("user", user);
       model.addAttribute("transactions", userTransactions);
       return "transactions";
     }

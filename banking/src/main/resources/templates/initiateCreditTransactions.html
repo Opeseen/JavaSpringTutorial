@@ -3,16 +3,26 @@
         <link th:href="@{/form-stylesheet.css}" rel="stylesheet"> 
     </head>    
     <body>
-        <div class="topnav">
-            <!-- <a class="active" th:href="@{/}">Form</a> -->
-        </div>
-        <div class="container">    
+        <div>
+            <div class="topnav" th:each="userInfo: ${user}">
+              <a>
+                <!-- <a class="modifyNote green" th:if="${userInfo == null}" th:href="@{/user/0/dashboard/}"> Dashboard</a> -->
+                <a class="modifyNote green" th:if="${userInfo.id != null}" th:href="@{/user/{id}/dashboard(id = ${userInfo.id})}"> Dashboard</a>
+              </a>
+            </div>
+            <!-- <a class="active" th:href="@{/user/{id}/dashboard(id = ${userInfo.Id})}">Dashboard</a> -->
+            <!-- <a class="active" th:href="@{/}">Dashboard</a> -->
+          
+            <div class="container">
+            <div class="alert" th:if="${status} == 'failed' ">
+            <strong>User Not Found</strong>
+            </div> 
             <h2> Fund Your Account </h2>
-            <form method="post" th:object="${credit}" th:action="@{/user/transaction/credit/{Id}/submit(Id = ${Id})}">
-                <!-- <input type="text" th:field="*{AccountNumber}"> -->
-                <input class="half" type="text" placeholder="Enter Amount" th:field="*{amount}">
-                <input class="half" type="text" placeholder="Description" th:field="*{description}">
-                <input type="submit" value="Submit Transaction">
+            <form method="post" th:object="${credit}" th:action="@{/user/{Id}/transaction/credit/submit(Id = ${Id})}">
+              <!-- <input type="text" th:field="*{AccountNumber}"> -->
+              <input class="half" type="text" placeholder="Enter Amount" th:field="*{amount}">
+              <input class="half" type="text" placeholder="Description" th:field="*{description}">
+              <input type="submit" value="Submit Transaction">
             </form>
         </div>      
     </body>

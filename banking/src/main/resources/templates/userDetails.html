@@ -7,8 +7,8 @@
   <body>
 
     <div class="topnav" th:each="userInfo: ${user}">
-      <a th:href="@{/user/login}">Form</a>
-      <a th:href="${userInfo.Id}">Dashboard</a>
+      <a th:href="@{/user/signup}">Home</a>
+      <!-- <a th:href="${userInfo.Id}">Dashboard</a> -->
     </div>
     
     <div class="alert success" th:if="${status} == 'success' ">
@@ -21,20 +21,26 @@
           <th>Username</th>
           <th>Account Number</th>
           <th>Balance</th>
-          <!-- <th>Action</th> -->
         </tr>
         <tr th:each="userInfo: ${user}">
           <td th:text="${userInfo.username}"></td>
           <td th:text="${userInfo.AccountNumber}"></td>
           <td th:text="${#numbers.formatCurrency(userInfo.Balance)}"></td>
-         <!-- <td> <a role="button" class="update" th:href="@{/(id = ${grades.id})}">Update</a> </td> -->
         </tr>
       </table>
       <br> <br> <br> <br> <br> <br> <br> <br>
       <div class="inputWrapper ctaWrapper" th:each="userInfo: ${user}">
-        <a class="modifyNote green" th:href="@{/user/transaction/credit/{id}(id = ${userInfo.id})}"> Deposit</a>
-        <a class="modifyNote red" id="" href="#">Withdrawal</a>
-        <a class="modifyNote blue" id="" th:href="@{/user/{id}/transaction/history(id = ${userInfo.id})}">Transaction History</a>
+        <a>
+          <a class="modifyNote green" th:if="${userInfo.id == null}" th:href="@{/user/0/transaction/credit}"> Deposit</a>
+          <a class="modifyNote green" th:if="${userInfo.id != null}" th:href="@{/user/{id}/transaction/credit(id = ${userInfo.id})}"> Deposit</a>
+        </a>
+        <a>
+          <a class="modifyNote red" id="" href="#">Withdrawal</a>
+        </a>
+        <a>
+          <a class="modifyNote blue" th:if="${userInfo.id == null}" th:href="@{/user/0/transaction/history}">Transaction History</a>
+          <a class="modifyNote green" th:if="${userInfo.id != null}" th:href="@{/user/{id}/transaction/history(id = ${userInfo.id})}"> Transaction History</a>
+        </a> 
       </div>
     </div>
     

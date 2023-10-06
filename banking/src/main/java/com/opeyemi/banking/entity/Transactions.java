@@ -1,5 +1,11 @@
 package com.opeyemi.banking.entity;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,8 +32,10 @@ public class Transactions {
 	@Column(name = "id")
 	private Long Id;
 
-	// @Column(name = "trans_date")
-	// private String transDate;
+	@CreationTimestamp
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Column(name = "trans_date")
+	private Date transDate;
 
 	@Column(name = "amount")
 	private String amount;

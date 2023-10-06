@@ -1,8 +1,12 @@
 package com.opeyemi.banking.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.*;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -54,6 +58,10 @@ public class User {
 
   @Column(name = "balance")
   private BigDecimal Balance;
+
+  @CreationTimestamp
+  @Column(name = "creation_date")
+  private LocalDateTime dateCreated;
 
   @JsonIgnore
   @OneToMany(mappedBy = "users", cascade = CascadeType.ALL )
