@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.springframework.stereotype.Service;
 
+
 import com.opeyemi.banking.entity.Transactions;
 import com.opeyemi.banking.entity.User;
 import com.opeyemi.banking.helpers.Helpers;
@@ -76,8 +77,6 @@ public class UserServiceImp implements UserService{
 
   @Override
   public List<Transactions> getUserTransactionHistory(String Id){
-    List<Transactions> trans = transactionRepository.findByUsersId(Long.parseLong(Id));
-    
     return transactionRepository.findByUsersId(Long.parseLong(Id));
   }
   
