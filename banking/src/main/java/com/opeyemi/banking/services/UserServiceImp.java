@@ -18,8 +18,8 @@ import com.opeyemi.banking.validators.Constants;
 import lombok.*;
 
 @AllArgsConstructor
-@Service
 
+@Service
 public class UserServiceImp implements UserService{
   
   UserRepository userRepository;
@@ -48,6 +48,7 @@ public class UserServiceImp implements UserService{
 
   }
 
+
   @Override
   public Transactions processCreditTransaction(TransactionRequest transactionRequest, String Id){
     if(fetchUser(Long.parseLong(Id)) == null) return null;
@@ -66,6 +67,34 @@ public class UserServiceImp implements UserService{
     return transactionRepository.save(newTransaction);
   }
 
+
+  @Override
+  public Boolean processDebitTransaction(TransactionRequest transactionRequest, String Id){
+    User user = fetchUser(Long.parseLong(Id));
+    BigDecimal currentUserBalance = user.getBalance();
+    BigDecimal amountToDebit = new BigDecimal(transactionRequest.getAmount());
+    BigDecimal negativeOne = new BigDecimal(-1);
+    String amountToDebitInNegative = amountToDebit.multiply(negativeOne).toString();
+
+    if(currentUserBalance.compareTo(amountToDebit) == -1){return false;}
+    else{
+      Transactions newTransaction = Transactions.builder()
+        .amount(amountToDebitInNegative)
+        .description(transactionRequest.getDescription())
+        .transType("Debit")
+        .build();
+    
+      user.setBalance(Helpers.debitExistingBalance(currentUserBalance, amountToDebitInNegative));
+      userRepository.save(user);
+      newTransaction.setUsers(user);
+      transactionRepository.save(newTransaction);
+      return true;
+    }
+  
+ 
+  }
+
+
   @Override
   public User fetchUser(Long id){
     Optional<User> user = userRepository.findById(id);
@@ -75,10 +104,12 @@ public class UserServiceImp implements UserService{
     return null;
   }
 
+
   @Override
   public List<Transactions> getUserTransactionHistory(String Id){
     return transactionRepository.findByUsersId(Long.parseLong(Id));
   }
+
   
   @Override
   public User confirmLoginDetails(String username, String password){

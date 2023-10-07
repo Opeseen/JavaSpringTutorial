@@ -1,10 +1,10 @@
 package com.opeyemi.banking.entity;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,6 +45,8 @@ public class Transactions {
 
 	@Column(name = "description")
 	private String description;
+
+
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")

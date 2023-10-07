@@ -19,4 +19,9 @@ public class Helpers {
     return currentBalance.add(creditAmout);
   }
 
+    public static BigDecimal debitExistingBalance(BigDecimal currentBalance, String amountToDebit){
+    BigDecimal debitAmout = new BigDecimal(amountToDebit);
+    return currentBalance.add(debitAmout);
+  }
+
 }

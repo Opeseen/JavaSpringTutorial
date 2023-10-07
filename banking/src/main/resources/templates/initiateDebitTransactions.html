@@ -1,6 +1,6 @@
 <html>
     <head>
-      <title>Fund Account</title>
+      <title>Withdrawal Page</title>
       <link th:href="@{/form-stylesheet.css}" rel="stylesheet"> 
     </head>    
     <body>
@@ -13,11 +13,11 @@
         </div>
           
         <div class="container">
-          <div class="alert" th:if="${status} == 'failed' ">
-            <strong>User Not Found</strong>
+          <div class="alert" th:if="${status} == 'insufficient_fund' ">
+            <strong>Insufficient Fund In Account</strong>
           </div> 
-          <h2> Fund Your Account </h2>
-          <form method="post" th:object="${request}" th:action="@{/user/{Id}/transaction/credit/submit(Id = ${Id})}">
+          <h2> Withdrawal Transaction </h2>
+          <form method="post" th:object="${request}" th:action="@{/user/{Id}/transaction/debit/submit(Id = ${Id})}">
             <!-- <input type="text" th:field="*{AccountNumber}"> -->
             <input class="half" type="text" placeholder="Enter Amount" th:field="*{amount}">
             <input class="half" type="text" placeholder="Description" th:field="*{description}">

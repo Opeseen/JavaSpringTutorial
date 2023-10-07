@@ -1,6 +1,8 @@
 package com.opeyemi.banking.helpers;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+
+
 @Getter
 @Setter
 @ToString
@@ -17,5 +19,6 @@ public class TransactionRequest {
 
   @NotBlank(message = "DEscription cannot be blank")
   private String description;
+
 
 }

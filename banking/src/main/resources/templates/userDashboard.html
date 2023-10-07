@@ -31,15 +31,16 @@
       <br> <br> <br> <br> <br> <br> <br> <br>
       <div class="inputWrapper ctaWrapper" th:each="userInfo: ${user}">
         <a>
-          <a class="modifyNote green" th:if="${userInfo.id == null}" th:href="@{/user/0/transaction/credit}"> Deposit</a>
-          <a class="modifyNote green" th:if="${userInfo.id != null}" th:href="@{/user/{id}/transaction/credit(id = ${userInfo.id})}"> Deposit</a>
+          <a class="modifyNote green" th:if="${userInfo.id == null}" th:href="@{/user/0/transaction/request}"> Deposit</a>
+          <a class="modifyNote green" th:if="${userInfo.id != null}" th:href="@{/user/{id}/transaction/request(id = ${userInfo.id}, type ='credit')}"> Deposit</a>
         </a>
         <a>
-          <a class="modifyNote red" id="" href="#">Withdrawal</a>
+          <a class="modifyNote red" th:if="${userInfo.id == null}" th:href="@{/user/0/transaction/request}" >Withdrawal</a>
+          <a class="modifyNote red" th:if="${userInfo.id != null}" th:href="@{/user/{id}/transaction/request(id = ${userInfo.id}, type = 'debit')}" >Withdrawal</a>
         </a>
         <a>
           <a class="modifyNote blue" th:if="${userInfo.id == null}" th:href="@{/user/0/transaction/history}">Transaction History</a>
-          <a class="modifyNote green" th:if="${userInfo.id != null}" th:href="@{/user/{id}/transaction/history(id = ${userInfo.id})}"> Transaction History</a>
+          <a class="modifyNote blue" th:if="${userInfo.id != null}" th:href="@{/user/{id}/transaction/history(id = ${userInfo.id})}"> Transaction History</a>
         </a> 
       </div>
     </div>

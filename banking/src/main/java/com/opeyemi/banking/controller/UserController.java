@@ -6,7 +6,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.opeyemi.banking.entity.Transactions;
@@ -21,8 +23,9 @@ import java.util.*;
 import jakarta.validation.Valid;
 import lombok.*;
 @AllArgsConstructor
-@Controller
 
+
+@Controller
 @RequestMapping("/user")
 public class UserController {
   List<User> items = new ArrayList<>();
@@ -73,17 +76,25 @@ public class UserController {
   public String dashboardPage(User user, Model model, @PathVariable(required = false) Long Id){
     // If user id not found - return empty - else return the user details
     model.addAttribute("user", userService.fetchUser(Id) == null ? new User() : userService.fetchUser(Id));
-    return "userDetails";
+    return "userDashboard";
     
   }
 
-  // Handler to navigate to the ucer to credit account page 
-  @GetMapping("/{Id}/transaction/credit")
-  public String creditRequestPage(Model model, @PathVariable Long Id){
+  // Handler to navigate to the ucer to credit/debit account request page 
+  @GetMapping("/{Id}/transaction/request")
+  public String transactionRequestPage(Model model, @PathVariable Long Id, @RequestParam(required = false) String type){
     User user = userService.fetchUser(Id);
-    model.addAttribute("credit", new TransactionRequest());
-    model.addAttribute("user", user);
-    return "initiateCreditTransactions";
+    if(type.equals("debit")){
+      model.addAttribute("request", new TransactionRequest());
+      model.addAttribute("user", user);
+      return "initiateDebitTransactions";
+    }
+    if(type.equals("credit")){
+      model.addAttribute("request", new TransactionRequest());
+      model.addAttribute("user", user);
+      return "initiateCreditTransactions"; 
+    }
+    return "result";
   }
 
   // Handler to submit the user credit request
@@ -93,10 +104,31 @@ public class UserController {
       return "redirect:/user/" + Id + "/dashboard";
     }else{
       redirectAttributes.addFlashAttribute("status", Constants.FAILED_STATUS);
-      return "redirect:/user/" + Id + "/transaction/credit";
+      return "redirect:/user/" + Id + "/transaction/request";
     }  
     
   }
+
+  // Handler to submit the user debit request
+  @PostMapping("/{Id}/transaction/debit/submit")
+  public String submitDebitRequest(TransactionRequest transactionRequest, Model model, @PathVariable(required = false) String Id, RedirectAttributes redirectAttributes){
+    try {
+      Boolean DebitTransactionRequest = userService.processDebitTransaction(transactionRequest, Id);
+      if(DebitTransactionRequest == false){
+        redirectAttributes.addFlashAttribute("status", Constants.INSUFFICIENT_FUND);
+        return "redirect:/user/" + Id + "/transaction/request?type=debit";
+      } else {
+        return "redirect:/user/" + Id + "/dashboard";
+      }
+    } catch (NullPointerException e) {
+      System.out.println(e.getMessage());
+      throw new RuntimeException("cool");
+      // return "error.html";
+    }
+    
+    
+  }
+
   // Handler to display user list of transactions history
   @GetMapping("/{Id}/transaction/history")
   public String showUserTransactions(Model model, @PathVariable String Id){

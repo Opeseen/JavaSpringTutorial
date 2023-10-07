@@ -56,7 +56,7 @@ public class User {
   @Column(name = "account_number")
   private String AccountNumber;
 
-  @Column(name = "balance")
+  @Column(name = "account_balance")
   private BigDecimal Balance;
 
   @CreationTimestamp
