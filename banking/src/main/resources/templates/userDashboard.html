@@ -11,10 +11,11 @@
       <!-- <a th:href="${userInfo.Id}">Dashboard</a> -->
     </div>
     
-    <div class="alert success" th:if="${status} == 'success' ">
-      <strong>Login Successfully</strong>
-    </div>
+    
     <div class= "container">
+      <div class="alert success" th:if="${status} == 'success' ">
+        <strong>Login Successfully</strong>
+      </div>
       <h2 > Account Dashboard </h2>
       <table id="table"> 
         <tr>

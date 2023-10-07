@@ -9,13 +9,15 @@
             <a th:href="@{/user/signup}">Home</a>
             <a th:href="@{/user/login}">Login</a>
         </div>  
-        <div class="alert success" th:if="${status} == 'success' ">
-            <strong>Registration Successful</strong>
-        </div>
-        <div class="alert" th:if="${status} == false ">
-            <strong>This user already exists in our records</strong>
-        </div>
+        
+        
         <div class="container">
+            <div class="alert" th:if="${status} == false ">
+                <strong>This user already exists in our records</strong>
+            </div>
+            <div class="alert success" th:if="${status} == 'success' ">
+                <strong>Registration Successful</strong>
+            </div>
             <h2>Account registration</h2>
             <form method="post" th:object="${userSetup}" th:action="@{/user/register}">
                 <p style="color: red;" th:errors="*{firstName}"></p>

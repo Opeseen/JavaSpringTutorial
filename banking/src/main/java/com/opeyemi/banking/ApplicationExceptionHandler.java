@@ -14,7 +14,7 @@ import com.opeyemi.banking.exceptions.ErrorResponse;
 public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler{
   @ExceptionHandler(NullPointerException.class)
   public ResponseEntity<Object> handleNullPointerException(NullPointerException ex){
-    ErrorResponse error = new ErrorResponse(Arrays.asList("The request is Null"));
+    ErrorResponse error = new ErrorResponse(Arrays.asList("The requested resources is a non existing"));
     return new ResponseEntity<>(error, null, HttpStatus.BAD_REQUEST);
   }
   

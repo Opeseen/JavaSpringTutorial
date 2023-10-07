@@ -17,9 +17,10 @@
             <strong>Insufficient Fund In Account</strong>
           </div> 
           <h2> Withdrawal Transaction </h2>
-          <form method="post" th:object="${request}" th:action="@{/user/{Id}/transaction/debit/submit(Id = ${Id})}">
-            <!-- <input type="text" th:field="*{AccountNumber}"> -->
+          <form method="post" th:object="${transactionRequest}" th:action="@{/user/{Id}/transaction/debit/submit(Id = ${Id})}">
+            <p style="color: red;" th:errors="*{amount}"></p>
             <input class="half" type="text" placeholder="Enter Amount" th:field="*{amount}">
+            <p style="color: red;" th:errors="*{description}"></p>
             <input class="half" type="text" placeholder="Description" th:field="*{description}">
             <input type="submit" value="Submit Transaction">
           </form>
