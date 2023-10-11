@@ -1,5 +1,6 @@
 package com.opeyemi.banking.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -8,13 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.opeyemi.banking.helpers.EmailSender;
 
-import lombok.*;
-
-@AllArgsConstructor
-
 @Service
-public class EmailServicesimp implements EmailServices{
-  
+public class EmailSvcImp implements EmailServices{
+
+  @Autowired
   JavaMailSender javaMailSender;
 
   @Value("${spring.mail.username}")
@@ -36,4 +34,5 @@ public class EmailServicesimp implements EmailServices{
     }
 
   }
+
 }

@@ -3,6 +3,7 @@ package com.opeyemi.banking.helpers;
 import lombok.*;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 

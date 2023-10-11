@@ -19,9 +19,14 @@ public class Helpers {
     return currentBalance.add(creditAmout);
   }
 
-    public static BigDecimal debitExistingBalance(BigDecimal currentBalance, String amountToDebit){
+  public static BigDecimal debitExistingBalance(BigDecimal currentBalance, String amountToDebit){
     BigDecimal debitAmout = new BigDecimal(amountToDebit);
     return currentBalance.add(debitAmout);
+  }
+
+  public static String emailMessageContent(String firstname, String lastname, String accountNumber){
+    String message =  "Congratulations, " + firstname.toUpperCase() + " " + lastname.toUpperCase() +  " Your account have been successfully registered.\nYour account number is " + accountNumber + "\n Welcome Onboard!!!";
+    return message;
   }
 
 }
