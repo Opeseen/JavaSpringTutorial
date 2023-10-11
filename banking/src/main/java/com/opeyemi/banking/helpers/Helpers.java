@@ -25,7 +25,7 @@ public class Helpers {
   }
 
   public static String emailMessageContent(String firstname, String lastname, String accountNumber){
-    String message =  "Congratulations, " + firstname.toUpperCase() + " " + lastname.toUpperCase() +  " Your account have been successfully registered.\nYour account number is " + accountNumber + "\n Welcome Onboard!!!";
+    String message =  "Congratulations, " + firstname.toUpperCase() + " " + lastname.toUpperCase() +  " Your account have been successfully registered.\n\nYour account number is " + accountNumber + "\n\n Welcome Onboard!!!";
     return message;
   }
 
