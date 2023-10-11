@@ -1,6 +1,8 @@
 package com.opeyemi.banking.services;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +18,22 @@ public class EmailServicesimp implements EmailServices{
   JavaMailSender javaMailSender;
 
   @Value("${spring.mail.username}")
-  private String emailSender;
+  private String emailSenderAddress;
 
   @Override
   public void sendEmail(EmailSender emailSender){
+    try {
+      SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+      simpleMailMessage.setFrom(emailSenderAddress);
+      simpleMailMessage.setTo(emailSender.getRecipient());
+      simpleMailMessage.setText(emailSender.getMessage());
+      simpleMailMessage.setSubject(emailSender.getSubject());
+
+      javaMailSender.send(simpleMailMessage);
+
+    } catch (MailException e) {
+      throw new RuntimeException("Error while sending email to user")
+    }
 
   }
 }
