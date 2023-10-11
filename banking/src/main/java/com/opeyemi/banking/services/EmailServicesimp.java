@@ -32,7 +32,7 @@ public class EmailServicesimp implements EmailServices{
       javaMailSender.send(simpleMailMessage);
 
     } catch (MailException e) {
-      throw new RuntimeException("Error while sending email to user")
+      throw new RuntimeException("Error while sending email to user");
     }
 
   }
