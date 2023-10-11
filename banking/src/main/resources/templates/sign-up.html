@@ -17,7 +17,7 @@
             </div>
             <div class="alert success" th:if="${status} == 'success' ">
                 <strong>Registration Successful</strong>
-                <strong>Your account details have been sent to your email address!</strong>
+                <p><strong>Your account details have been sent to your email address!</strong></p>
             </div>
             <h2>Account registration</h2>
             <form method="post" th:object="${userSetup}" th:action="@{/user/register}">
