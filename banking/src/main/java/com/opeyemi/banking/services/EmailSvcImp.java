@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.opeyemi.banking.helpers.EmailSender;
 
 @Service
-public class EmailServiceImp implements EmailServices{
+public class EmailSvcImp implements EmailServices{
 
   @Autowired
   JavaMailSender javaMailSender;
