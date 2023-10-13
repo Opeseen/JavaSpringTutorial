@@ -15,9 +15,9 @@
             <h2>Login page</h2>
             <form method="post" th:object="${user}" th:action="@{/user/submitLoginDetails}">
                 <p style="color: red;" th:errors="*{username}"></p>
-                <input type="text" placeholder="Enter your username" th:field="*{username}">
+                <input type="text" placeholder="Enter your username" th:field="*{username}" required>
                 <p style="color: red;" th:errors="*{password}"></p>
-                <input type="text" placeholder="Enter your password" th:field="*{password}">
+                <input type="text" placeholder="Enter your password" th:field="*{password}" required>
                 <input type="submit" value="Submit">                
             </form>
         </div>  
