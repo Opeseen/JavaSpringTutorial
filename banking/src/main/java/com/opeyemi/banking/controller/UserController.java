@@ -27,7 +27,6 @@ import lombok.*;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-  List<User> items = new ArrayList<>();
   UserService userService;
 
   @GetMapping("/signup")
