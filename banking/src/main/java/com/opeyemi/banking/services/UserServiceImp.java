@@ -3,6 +3,7 @@ package com.opeyemi.banking.services;
 import java.math.BigDecimal;
 import java.util.*;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -26,6 +27,7 @@ public class UserServiceImp implements UserService{
   UserRepository userRepository;
   TransactionRepository transactionRepository;
   EmailServices emailServices;
+  private BCryptPasswordEncoder passwordEncoder;
 
   @Override
   public Boolean createUser(UserSetup request){
@@ -41,7 +43,7 @@ public class UserServiceImp implements UserService{
       .username(request.getUsername())
       .email(request.getEmail())
       .contactAddress(request.getContactAddress())
-      .password(request.getPassword())
+      .password(passwordEncoder.encode(request.getPassword()))
       .AccountNumber(Helpers.generateAcccountNumber())
       .Balance(request.getBalance())
       .build();
@@ -126,7 +128,7 @@ public class UserServiceImp implements UserService{
   
   @Override
   public User confirmLoginDetails(String username, String password){
-    Optional<User> foundUser = userRepository.findByUsernameAndPassword(username,password);
+    Optional<User> foundUser = userRepository.findByUsernameAndPassword(username,passwordEncoder.encode(password));
     if (foundUser.isPresent()){
       return foundUser.get();
     }else{
