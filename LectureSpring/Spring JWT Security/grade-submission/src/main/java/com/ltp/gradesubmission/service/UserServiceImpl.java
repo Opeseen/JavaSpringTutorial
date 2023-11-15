@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ltp.gradesubmission.entity.User;
 import com.ltp.gradesubmission.exception.EntityNotFoundException;
+import com.ltp.gradesubmission.exception.UserAlreadyExistException;
 import com.ltp.gradesubmission.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ import lombok.AllArgsConstructor;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public User getUser(Long id) {
@@ -25,6 +26,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(User user) {
+        Optional<User> foundUser = userRepository.findByUsername(user.getUsername().toUpperCase());
+        if(foundUser.isPresent()) throw new UserAlreadyExistException(user.getUsername());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setUsername(user.getUsername().toUpperCase());
         return userRepository.save(user);
     }
 

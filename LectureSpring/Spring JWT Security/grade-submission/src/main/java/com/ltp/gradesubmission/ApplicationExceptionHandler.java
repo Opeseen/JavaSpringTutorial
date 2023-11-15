@@ -20,6 +20,7 @@ import com.ltp.gradesubmission.exception.EntityNotFoundException;
 import com.ltp.gradesubmission.exception.ErrorResponse;
 import com.ltp.gradesubmission.exception.GradeNotFoundException;
 import com.ltp.gradesubmission.exception.StudentNotEnrolledException;
+import com.ltp.gradesubmission.exception.UserAlreadyExistException;
 
 
 @ControllerAdvice
@@ -40,6 +41,12 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
         ErrorResponse error = new ErrorResponse(Arrays.asList("Data Integrity Violation: we cannot process your request."));  
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+   @ExceptionHandler(UserAlreadyExistException.class)
+    public ResponseEntity<Object> handleUsernameExistsException(RuntimeException ex) {
+        ErrorResponse error = new ErrorResponse(Arrays.asList(ex.getMessage()));  
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
