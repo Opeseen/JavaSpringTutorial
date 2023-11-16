@@ -22,12 +22,6 @@ import lombok.AllArgsConstructor;
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
-        chain.doFilter(request, response);
-    }
-    
-    @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException{
         try {
             User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
