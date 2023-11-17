@@ -23,10 +23,11 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
             User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
             System.out.println(user.getUsername());
             System.out.println(user.getPassword());
+        
         } catch (IOException e) {
             throw new RuntimeException();
         }
-        
         return super.attemptAuthentication(request, response);
+        
     }
 }
