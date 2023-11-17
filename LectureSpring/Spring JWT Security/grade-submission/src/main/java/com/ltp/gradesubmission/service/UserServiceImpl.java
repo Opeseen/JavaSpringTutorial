@@ -25,11 +25,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUser(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        return unwrapUser(user, 404L);
+    }
+
+    @Override
     public User saveUser(User user) {
-        Optional<User> foundUser = userRepository.findByUsername(user.getUsername().toUpperCase());
+        Optional<User> foundUser = userRepository.findByUsername(user.getUsername());
         if(foundUser.isPresent()) throw new UserAlreadyExistException(user.getUsername());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setUsername(user.getUsername().toUpperCase());
         return userRepository.save(user);
     }
 
