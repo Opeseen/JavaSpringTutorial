@@ -36,7 +36,7 @@ public class User {
 	private String username;
 
 	@NotBlank(message =  "password cannot be blank")
-    @NonNull
+  @NonNull
 	@Column(nullable = false)
 	private String password;
 
