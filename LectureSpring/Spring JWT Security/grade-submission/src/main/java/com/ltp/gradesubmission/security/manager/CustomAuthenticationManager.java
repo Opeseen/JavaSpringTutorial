@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 public class CustomAuthenticationManager implements AuthenticationManager {
     private UserServiceImpl userServiceImpl;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         User user = userServiceImpl.getUser(authentication.getName());
