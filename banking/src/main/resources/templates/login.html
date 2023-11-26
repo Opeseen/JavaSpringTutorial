@@ -6,7 +6,8 @@
     </head>
     <body>
         <div class="topnav">
-            <a th:href="@{/user/signup}">Home</a>
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/user/signup}">Sign Up</a>
         </div>  
         <div class="container">
             <div class="alert" th:if="${status} == 'failed' ">

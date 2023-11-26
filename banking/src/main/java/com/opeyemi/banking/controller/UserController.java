@@ -25,18 +25,22 @@ import lombok.*;
 
 
 @Controller
-@RequestMapping("/user")
+// @RequestMapping("/user")
 public class UserController {
   UserService userService;
 
-  @GetMapping("/signup")
+  @GetMapping("/")
+  public String WelcomePage(Model model){
+    return "homepage";
+  }
+  @GetMapping("user/signup")
   public String UserForm(Model model){
     model.addAttribute("userSetup", new UserSetup());
     return "sign-up";
   }
 
   // Controller to register user
-  @PostMapping("/register")
+  @PostMapping("user/register")
   public String registrationHandler(@Valid UserSetup userSetup, BindingResult result, RedirectAttributes redirectAttributes){
     if(!userSetup.getPassword().equals(userSetup.getConfirmPassword())) result.rejectValue("confirmPassword", "", "Password do not match");
     if (result.hasErrors()) return "sign-up";
@@ -50,14 +54,14 @@ public class UserController {
   }
 
   // Controller to navigate to the login page
-  @GetMapping("/login")
+  @GetMapping("user/login")
   public String loginPage(User user, Model model){
     model.addAttribute("user", new User());
     return "login";
   }
 
   // Controller to handle user login credentials
-  @PostMapping("/submitLoginDetails")
+  @PostMapping("user/submitLoginDetails")
   public String loginhandler(User user, Model model, RedirectAttributes redirectAttributes){
     User userConfirmation = userService.confirmLoginDetails(user.getUsername(), user.getPassword());
     if(userConfirmation != null){
@@ -70,7 +74,7 @@ public class UserController {
     }
   }
   // Handler to shou the User dashboard
-  @GetMapping("/{Id}/dashboard")
+  @GetMapping("user/{Id}/dashboard")
   public String dashboardPage(User user, Model model, @PathVariable(required = false) Long Id){
     // If user id not found - return empty - else return the user details
     model.addAttribute("user", userService.fetchUser(Id) == null ? new User() : userService.fetchUser(Id));
@@ -79,7 +83,7 @@ public class UserController {
   }
 
   // Handler to navigate to the ucer to credit/debit account request page 
-  @GetMapping("/{Id}/transaction/request")
+  @GetMapping("user/{Id}/transaction/request")
   public String transactionRequestPage(Model model, @PathVariable Long Id, @RequestParam(required = false) String type){
     User user = userService.fetchUser(Id);
     if(type.equals("debit")){
@@ -96,7 +100,7 @@ public class UserController {
   }
 
   // Handler to submit the user credit request
-  @PostMapping("/{Id}/transaction/credit/submit")
+  @PostMapping("user/{Id}/transaction/credit/submit")
   public String submitCreditRequest(@Valid TransactionRequest transactionRequest, BindingResult result, Model model, @PathVariable(required = false) String Id, RedirectAttributes redirectAttributes){
     if (result.hasErrors()) {return "initiateCreditTransactions";}
     if(userService.processCreditTransaction(transactionRequest, Id) != null){
@@ -109,7 +113,7 @@ public class UserController {
   }
 
   // Handler to submit the user debit request
-  @PostMapping("/{Id}/transaction/debit/submit")
+  @PostMapping("user/{Id}/transaction/debit/submit")
   public String submitDebitRequest(@Valid TransactionRequest transactionRequest, BindingResult result, Model model, @PathVariable(required = false) String Id, RedirectAttributes redirectAttributes){
     if (result.hasErrors()) {return "initiateDebitTransactions";}
     Boolean DebitTransactionRequest = userService.processDebitTransaction(transactionRequest, Id);
@@ -124,7 +128,7 @@ public class UserController {
   }
 
   // Handler to display user list of transactions history
-  @GetMapping("/{Id}/transaction/history")
+  @GetMapping("user/{Id}/transaction/history")
   public String showUserTransactions(Model model, @PathVariable String Id){
     List<Transactions> userTransactions = userService.getUserTransactionHistory(Id);
     User user = userService.fetchUser(Long.parseLong(Id));

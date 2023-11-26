@@ -6,7 +6,8 @@
     </head>
     <body>
         <div class="topnav">
-            <a th:href="@{/user/signup}">Home</a>
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/user/signup}">Sign Up</a>
             <a th:href="@{/user/login}">Login</a>
         </div>  
         
@@ -19,7 +20,7 @@
                 <strong>Registration Successful</strong>
                 <p><strong>Your account details have been sent to your email address!</strong></p>
             </div>
-            <h2>Account registration</h2>
+            <h2>User registration</h2>
             <form method="post" th:object="${userSetup}" th:action="@{/user/register}">
                 <p style="color: red;" th:errors="*{firstName}"></p>
                 <input type="text" placeholder="First Name" th:field="*{firstName}">
