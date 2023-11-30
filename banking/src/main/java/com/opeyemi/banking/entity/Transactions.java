@@ -51,4 +51,5 @@ public class Transactions {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User users;
+
 }
