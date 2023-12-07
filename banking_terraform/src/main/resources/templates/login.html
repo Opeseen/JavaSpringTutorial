@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login</title>
+        <link rel="stylesheet" th:href="@{/form-stylesheet.css}">
+    </head>
+    <body>
+        <div class="topnav">
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/user/signup}">Sign Up</a>
+        </div>  
+        <div class="container">
+            <div class="alert" th:if="${status} == 'failed' ">
+                <strong>Login Failed - Incorrect Credentials</strong>
+            </div>
+            <h2>Login page</h2>
+            <form method="post" th:object="${user}" th:action="@{/user/submitLoginDetails}">
+                <p style="color: red;" th:errors="*{username}"></p>
+                <input type="text" placeholder="Enter your username" th:field="*{username}" required>
+                <p style="color: red;" th:errors="*{password}"></p>
+                <input type="text" placeholder="Enter your password" th:field="*{password}" required>
+                <input type="submit" value="Submit">                
+            </form>
+        </div>  
+    </body>
+</html>

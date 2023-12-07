@@ -1,0 +1,50 @@
+<!DOCTYPE>
+<html>
+  <head> 
+    <title>User Page</title>
+    <link th:href="@{/user-stylesheet.css}" rel="stylesheet">
+  </head>
+  <body>
+
+    <div class="topnav" th:each="userInfo: ${user}">
+      <a th:href="@{/}">Home</a>
+      <!-- <a th:href="${userInfo.Id}">Dashboard</a> -->
+    </div>
+    
+    
+    <div class= "container">
+      <div class="alert success" th:if="${status} == 'success' ">
+        <strong>Login Successfully</strong>
+      </div>
+      <h2 > Account Dashboard </h2>
+      <table id="table"> 
+        <tr>
+          <th>Username</th>
+          <th>Account Number</th>
+          <th>Balance</th>
+        </tr>
+        <tr th:each="userInfo: ${user}">
+          <td th:text="${userInfo.username}"></td>
+          <td th:text="${userInfo.AccountNumber}"></td>
+          <td th:text="${#numbers.formatCurrency(userInfo.Balance)}"></td>
+        </tr>
+      </table>
+      <br> <br> <br> <br> <br> <br> <br> <br>
+      <div class="inputWrapper ctaWrapper" th:each="userInfo: ${user}">
+        <a>
+          <a class="deposit green" th:if="${userInfo.id == null}" th:href="@{/user/0/transaction/request}"> Deposit</a>
+          <a class="deposit green" th:if="${userInfo.id != null}" th:href="@{/user/{id}/transaction/request(id = ${userInfo.id}, type ='credit')}"> Deposit</a>
+        </a>
+        <a>
+          <a class="withdrawal red" th:if="${userInfo.id == null}" th:href="@{/user/0/transaction/request}" >Withdrawal</a>
+          <a class="withdrawal red" th:if="${userInfo.id != null}" th:href="@{/user/{id}/transaction/request(id = ${userInfo.id}, type = 'debit')}" >Withdrawal</a>
+        </a>
+        <a>
+          <a class="transactions blue" th:if="${userInfo.id == null}" th:href="@{/user/0/transaction/history}">Transaction History</a>
+          <a class="transactions blue" th:if="${userInfo.id != null}" th:href="@{/user/{id}/transaction/history(id = ${userInfo.id})}"> Transaction History</a>
+        </a> 
+      </div>
+    </div>
+    
+  </body>
+</html>

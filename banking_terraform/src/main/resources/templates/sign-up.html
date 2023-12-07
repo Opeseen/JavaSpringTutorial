@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sign Up</title>
+        <link rel="stylesheet" th:href="@{/form-stylesheet.css}">
+    </head>
+    <body>
+        <div class="topnav">
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/user/signup}">Sign Up</a>
+            <a th:href="@{/user/login}">Login</a>
+        </div>  
+        
+        
+        <div class="container">
+            <div class="alert" th:if="${status} == false ">
+                <strong>This user already exists in our records</strong>
+            </div>
+            <div class="alert success" th:if="${status} == 'success' ">
+                <strong>Registration Successful</strong>
+                <p><strong>Your account details have been sent to your email address!</strong></p>
+            </div>
+            <h2>User registration</h2>
+            <form method="post" th:object="${userSetup}" th:action="@{/user/register}">
+                <p style="color: red;" th:errors="*{firstName}"></p>
+                <input type="text" placeholder="First Name" th:field="*{firstName}">
+                <p style="color: red;" th:errors="*{lastName}"></p>
+                <input type="text" placeholder="Last Name" th:field="*{lastName}">
+                <p style="color: red;" th:errors="*{username}"></p>
+                <input type="text" placeholder="Username" th:field="*{username}">
+                <p style="color: red;" th:errors="*{email}"></p>
+                <input type="text" placeholder="Email" th:field="*{email}">
+                <p style="color: red;" th:errors="*{contactAddress}"></p>
+                <input type="text" placeholder="Address" th:field="*{contactAddress}">
+                <p style="color: red;" th:errors="*{password}"></p>
+                <input type="text" placeholder="Password" th:field="*{password}">
+                <p style="color: red;" th:errors="*{confirmPassword}"></p>
+                <input type="text" placeholder="Confirm password" th:field="*{confirmPassword}">
+                <input type="submit" value="Submit">                
+            </form>
+        </div>  
+    </body>
+</html>

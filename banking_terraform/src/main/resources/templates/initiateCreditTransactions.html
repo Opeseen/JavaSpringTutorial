@@ -1,0 +1,30 @@
+<html>
+    <head>
+      <title>Fund Account</title>
+      <link th:href="@{/form-stylesheet.css}" rel="stylesheet"> 
+    </head>    
+    <body>
+      <div>
+        <div class="topnav" th:each="userInfo: ${user}">
+          <a>
+            <!-- <a class="modifyNote green" th:if="${userInfo == null}" th:href="@{/user/0/dashboard/}"> Dashboard</a> -->
+            <a class="modifyNote green" th:if="${userInfo.id != null}" th:href="@{/user/{id}/dashboard(id = ${userInfo.id})}"> Dashboard</a>
+          </a>
+        </div>
+          
+        <div class="container">
+          <div class="alert" th:if="${status} == 'failed' ">
+            <strong>User Not Found</strong>
+          </div> 
+          <h2> Fund Your Account </h2>
+          <form method="post" th:object="${transactionRequest}" th:action="@{/user/{Id}/transaction/credit/submit(Id = ${Id})}">
+            <p style="color: red;" th:errors="*{amount}"></p>
+            <input class="half" type="text" placeholder="Enter Amount" th:field="*{amount}">
+            <p style="color: red;" th:errors="*{description}"></p>
+            <input class="half" type="text" placeholder="Description" th:field="*{description}">
+            <input type="submit" value="Submit Transaction">
+          </form>
+        </div> 
+      </div>      
+    </body>
+</html>
