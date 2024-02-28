@@ -11,7 +11,7 @@
 	<groupId>com.opeyemi</groupId>
 	<artifactId>banking</artifactId>
 	<version>v1</version>
-	<!-- <packaging>war</packaging> -->
+	<packaging>war</packaging>
 	<name>banking</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
