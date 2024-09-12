@@ -20,5 +20,12 @@ public class StaffServiceImp implements StaffService {
     return staffRepository.save(staff);
   }
 
+  @Override
+  public Staff updateStaff(Long id, Staff staff){
+    Optional<Staff> coyStaff = staffRepository.findById(id);
+    if(coyStaff.isPresent()) System.out.println(coyStaff.get());
+    System.out.println("Good");
+    return staffRepository.save(staff);
+  }
   
 }

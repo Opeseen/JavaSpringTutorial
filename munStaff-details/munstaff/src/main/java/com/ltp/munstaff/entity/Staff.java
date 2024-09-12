@@ -23,7 +23,7 @@ public class Staff {
   private String lastname;
   private String phone;
   private String address;
-  @Column(name = "email", nullable = false, unique = true)
+  @Column(name = "email", unique = true)
   private String email;
   private String state;
   private String city;
