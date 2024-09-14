@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-
-
-
 @Controller
 @AllArgsConstructor
 @RequestMapping("/mundial")
@@ -30,8 +27,7 @@ public class StaffController {
       
       return new ResponseEntity<>(staffService.saveStaff(entity), HttpStatus.CREATED);
   }
-
-  
+    
   @PutMapping("/staff/{id}")
   public ResponseEntity<Employees>updateEntity(@PathVariable Long id, @RequestBody Employees entity) {
       
