@@ -1,8 +1,8 @@
 package com.ltp.munstaff.services;
 
-import com.ltp.munstaff.entity.Staff;
+import com.ltp.munstaff.entity.Employees;
 
 public interface StaffService {
-  Staff saveStaff(Staff staff);
-  Staff updateStaff(Long id, Staff staff);
+  Employees saveStaff(Employees staff);
+  Employees updateStaff(Long id, Employees staff);
 }

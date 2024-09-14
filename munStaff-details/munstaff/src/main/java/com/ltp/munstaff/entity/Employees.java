@@ -15,7 +15,7 @@ import lombok.*;
 @Entity
 @Table(name = "staffs")
 
-public class Staff {
+public class Employees {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
