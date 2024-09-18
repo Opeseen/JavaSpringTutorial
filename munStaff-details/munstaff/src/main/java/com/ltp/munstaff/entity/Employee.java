@@ -12,10 +12,11 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
-@Table(name = "staffs")
+@Table(name = "employees")
 
-public class Employees {
+public class Employee {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

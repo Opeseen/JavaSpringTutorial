@@ -1,4 +1,4 @@
-package com.ltp.munstaff.exception;
+package com.ltp.munstaff.response.error;
 
 import java.time.LocalDateTime;
 
@@ -10,14 +10,16 @@ import lombok.*;
 @Setter
 public class ErrorResponse {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
-  private LocalDateTime timestamp;
+  private Boolean error;
   private String message;
   private String details;
+  private LocalDateTime timestamp;
   
-  public ErrorResponse(String message, String details) {
+  public ErrorResponse(Boolean error, String message, String details) {
     super();
-    this.timestamp = LocalDateTime.now();
+    this.error = error;
     this.message = message;
     this.details = details;
-  }
+    this.timestamp = LocalDateTime.now();
+  };
 }

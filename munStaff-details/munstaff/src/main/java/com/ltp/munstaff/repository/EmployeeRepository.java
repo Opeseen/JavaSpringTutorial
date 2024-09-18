@@ -4,10 +4,10 @@ package com.ltp.munstaff.repository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.ltp.munstaff.entity.Employees;
+import com.ltp.munstaff.entity.Employee;
 
 @Repository
-public interface StaffRepository extends CrudRepository<Employees, Long>{
+public interface EmployeeRepository extends CrudRepository<Employee, Long>{
 
   
 }
