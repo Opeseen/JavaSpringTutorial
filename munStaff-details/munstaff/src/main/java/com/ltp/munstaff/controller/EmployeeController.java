@@ -35,7 +35,7 @@ public class EmployeeController {
   
   @GetMapping("/employee/all")
   public ResponseEntity<?>getAllEntity() {
-    List<Employee>  entity = employeeService.getAllEmployee();
+    List<Employee> entity = employeeService.getAllEmployee();
     SuccessResponse successDetails = new SuccessResponse(true, entity.size(), entity, null);
     return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };

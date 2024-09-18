@@ -29,5 +29,5 @@ public class Employee {
   private String state;
   private String city;
   private String nationality;
-}
+};
 
