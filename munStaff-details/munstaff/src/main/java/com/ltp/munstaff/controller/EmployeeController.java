@@ -7,8 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import com.ltp.munstaff.entity.Employee;
+import com.ltp.munstaff.entity.PayGroup;
 import com.ltp.munstaff.response.success.SuccessResponse;
 import com.ltp.munstaff.services.EmployeeService;
+import com.ltp.munstaff.services.PayGroupService;
 
 import lombok.AllArgsConstructor;
 
@@ -19,35 +21,36 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
-
 @Controller
 @AllArgsConstructor
 @RequestMapping("/mundial")
 public class EmployeeController {
-  
+
   EmployeeService employeeService;
+  PayGroupService payGroupService;
 
   @GetMapping("/employee/{id}")
-  public ResponseEntity<Employee>getEntity(@PathVariable Long id) {
+  public ResponseEntity<Employee> getEntity(@PathVariable Long id) {
     return new ResponseEntity<>(employeeService.getEmployee(id), HttpStatus.OK);
   };
-  
+
   @GetMapping("/employee/all")
-  public ResponseEntity<?>getAllEntity() {
+  public ResponseEntity<?> getAllEntity() {
     List<Employee> entity = employeeService.getAllEmployee();
     SuccessResponse successDetails = new SuccessResponse(true, entity.size(), entity, null);
     return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };
-  
+
   @PostMapping("/employee")
-  public ResponseEntity<Employee>saveEntity(@RequestBody Employee entity){
+  public ResponseEntity<Employee> saveEntity(@RequestBody Employee entity) {
+    PayGroup payGroup = payGroupService.getPayGroup(Long.valueOf(1));
+    entity.setPayGroup(payGroup);
     return new ResponseEntity<>(employeeService.saveEmployee(entity), HttpStatus.CREATED);
   };
-    
+
   @PutMapping("/employee/{id}")
-  public ResponseEntity<Employee>updateEntity(@PathVariable Long id, @RequestBody Employee entity) {
+  public ResponseEntity<Employee> updateEntity(@PathVariable Long id, @RequestBody Employee entity) {
     return new ResponseEntity<>(employeeService.updateEmployee(id, entity), HttpStatus.OK);
   };
-  
+
 };

@@ -1,9 +1,14 @@
 package com.ltp.munstaff.entity;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.*;
 
@@ -11,21 +16,15 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Entity
-@Table(name = "payment")
-
-public class Payment {
+@Table(name = "paygroup")
+public class PayGroup {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private Number basic;
-  private Number housing;
-  private Number transport;
-  private Number utility;
-  private Number grossPay;
-  private Number tax;
-  private Number employeePensionContribution;
-  private Number employerPensionContribution;
-  private Number netPay;
+  private String paygroup;
+
+  @JsonIgnore
+  @OneToMany(mappedBy = "payGroup")
+  private List<Employee> employee;
 };
