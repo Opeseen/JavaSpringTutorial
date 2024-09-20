@@ -15,6 +15,7 @@ import com.ltp.munstaff.services.PayGroupService;
 import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -42,8 +43,9 @@ public class EmployeeController {
   };
 
   @PostMapping("/employee")
-  public ResponseEntity<Employee> saveEntity(@RequestBody Employee entity) {
-    PayGroup payGroup = payGroupService.getPayGroup(Long.valueOf(1));
+  public ResponseEntity<Employee> saveEntity(@RequestBody Employee entity,
+      @RequestParam(required = false) Long payGroupId) {
+    PayGroup payGroup = payGroupService.getPayGroup(payGroupId);
     entity.setPayGroup(payGroup);
     return new ResponseEntity<>(employeeService.saveEmployee(entity), HttpStatus.CREATED);
   };

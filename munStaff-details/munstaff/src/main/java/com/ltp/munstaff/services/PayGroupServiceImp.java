@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.ltp.munstaff.entity.PayGroup;
 import com.ltp.munstaff.repository.PayGroupRepository;
-import com.ltp.munstaff.response.error.PayGroupNotFoundException;
 
 import lombok.AllArgsConstructor;
 
@@ -23,11 +22,12 @@ public class PayGroupServiceImp implements PayGroupService {
 
   @Override
   public PayGroup getPayGroup(Long id) {
-    Optional<PayGroup> entity = payGroupRepository.findById(id);
-    if (entity.isPresent()) {
-      return entity.get();
+    if (id != null) {
+      Optional<PayGroup> entity = payGroupRepository.findById(id);
+      if (entity.isPresent()) {
+        return entity.get();
+      }
     }
-    ;
-    throw new PayGroupNotFoundException(id);
+    return null;
   };
 };

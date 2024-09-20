@@ -22,7 +22,7 @@ public class PayGroup {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private String paygroup;
+  private String category;
 
   @JsonIgnore
   @OneToMany(mappedBy = "payGroup")
