@@ -22,8 +22,6 @@ public class PayGroupController {
 
   @PostMapping("/paygroup")
   public ResponseEntity<PayGroup> savePayGroup(@RequestBody PayGroup entity, @RequestParam(required = false) Long id) {
-    // TODO: process POST request
-
     return new ResponseEntity<>(payGroupService.savePayGroup(entity), HttpStatus.CREATED);
   };
 };
