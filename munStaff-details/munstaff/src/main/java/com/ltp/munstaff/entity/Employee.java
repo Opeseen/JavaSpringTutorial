@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.*;
 
@@ -32,7 +32,7 @@ public class Employee {
   private String city;
   private String nationality;
 
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "paygroupId", referencedColumnName = "id")
   private PayGroup payGroup;
 };

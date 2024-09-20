@@ -53,6 +53,11 @@ public class EmployeeServiceImp implements EmployeeService {
     return employeeRepository.save(confirmedEntity);
   };
 
+  @Override // DELETE ENTITY
+  public void deleteEmployee(Long id){
+    employeeRepository.deleteById(id);
+  };
+
   // FIND ENTITY
   static Employee fetchEmployee(Optional<Employee> entity, Long id) {
     if (entity.isPresent())

@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ltp.munstaff.entity.Employee;
 
 import lombok.*;
 
@@ -14,11 +13,11 @@ public class SuccessResponse {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
   private Boolean success;
   private Number result;
-  private List<Employee> message;
+  private List<?> message;
   private String details;
   private LocalDateTime timestamp;
 
-  public SuccessResponse(Boolean success, Number result, List<Employee> message, String details) {
+  public SuccessResponse(Boolean success, Number result, List<?> message, String details) {
     super();
     this.success = success;
     this.result = result;

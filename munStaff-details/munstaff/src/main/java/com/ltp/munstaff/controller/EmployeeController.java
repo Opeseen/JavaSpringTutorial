@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -45,7 +46,7 @@ public class EmployeeController {
   @PostMapping("/employee")
   public ResponseEntity<Employee> saveEntity(@RequestBody Employee entity,
       @RequestParam(required = false) Long payGroupId) {
-    PayGroup payGroup = payGroupService.getPayGroup(payGroupId);
+    PayGroup payGroup = payGroupService.FetchPayGroup(payGroupId);
     entity.setPayGroup(payGroup);
     return new ResponseEntity<>(employeeService.saveEmployee(entity), HttpStatus.CREATED);
   };
@@ -53,6 +54,12 @@ public class EmployeeController {
   @PutMapping("/employee/{id}")
   public ResponseEntity<Employee> updateEntity(@PathVariable Long id, @RequestBody Employee entity) {
     return new ResponseEntity<>(employeeService.updateEmployee(id, entity), HttpStatus.OK);
+  };
+
+  @DeleteMapping("/employee/{id}")
+  public ResponseEntity<HttpStatus> deleteEntity(@PathVariable Long id){
+    employeeService.deleteEmployee(id);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   };
 
 };

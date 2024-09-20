@@ -14,15 +14,32 @@ import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
+@ToString
 @Table(name = "paygroup")
 public class PayGroup {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @NonNull
   private String category;
+  @NonNull
+  private Integer basic;
+  @NonNull
+  private Integer housing;
+  @NonNull
+  private Integer transport;
+  @NonNull
+  private Integer utility;
+  @NonNull
+  private Integer grossPay;
+  private Integer tax;
+  private Integer employeePensionContribution;
+  private Integer employerPensionContribution;
+  private Integer netPay;
 
   @JsonIgnore
   @OneToMany(mappedBy = "payGroup")
