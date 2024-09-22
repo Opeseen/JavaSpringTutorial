@@ -9,7 +9,8 @@ import com.ltp.munstaff.entity.Employee;
 import com.ltp.munstaff.entity.PayGroup;
 import com.ltp.munstaff.repository.EmployeeRepository;
 import com.ltp.munstaff.repository.PayGroupRepository;
-import com.ltp.munstaff.response.error.PayGroupNotFoundException;
+import com.ltp.munstaff.response.error.ExistingRecordFoundException;
+import com.ltp.munstaff.response.error.NotFoundException;
 import com.ltp.munstaff.response.error.ResourceAlreadyExist;
 
 import lombok.AllArgsConstructor;
@@ -36,7 +37,7 @@ public class PayGroupServiceImp implements PayGroupService {
     if (entity.isPresent()) {
       return entity.get();
     }
-    throw new PayGroupNotFoundException(id);
+    throw new NotFoundException("No payGroup found with id", id);
   };
 
   @Override // GET ALL PAY-GROUP
@@ -58,7 +59,7 @@ public class PayGroupServiceImp implements PayGroupService {
   @Override // UPDATE PAY-GROUP
   public PayGroup updatePayGroup(PayGroup payGroup, Long id) {
     Optional<PayGroup> entity = payGroupRepository.findById(id);
-    PayGroup confirmedEntity = StaticFetchPayGroup(entity, id);
+    PayGroup confirmedEntity = staticFetchPayGroup(entity, id);
     confirmedEntity.setCategory(payGroup.getCategory());
     confirmedEntity.setBasic(payGroup.getBasic());
     confirmedEntity.setHousing(payGroup.getHousing());
@@ -82,17 +83,28 @@ public class PayGroupServiceImp implements PayGroupService {
     // Verify if an employee was returned based on the findById request //
     Employee verifiedEmployee = EmployeeServiceImp.fetchEmployee(employee, employeeId);
 
-    List<Employee> employee2 = (List<Employee>) payGroup.getEmployee();
-    System.out.println(employee2);
+    // This will throw an error if the employee is already attach to a payGroup
+    checkIsPayGroupAttached(payGroup, employeeId);
+
     payGroup.getEmployee().add(verifiedEmployee);
     return payGroupRepository.save(payGroup);
   };
 
   // STATIC FIND ENTITY
-  static PayGroup StaticFetchPayGroup(Optional<PayGroup> entity, Long id) {
+  static PayGroup staticFetchPayGroup(Optional<PayGroup> entity, Long id) {
     if (entity.isPresent())
       return entity.get();
-    throw new PayGroupNotFoundException(id);
+    throw new NotFoundException("No payGroup found with id", id);
   };
+
+  // This method will prevent double payGroup for an employee.
+  static Boolean checkIsPayGroupAttached(PayGroup payGroup, Long employeeId) {
+    for (Employee employee : payGroup.getEmployee()) {
+      if (employee.getId().equals(employeeId)) {
+        throw new ExistingRecordFoundException("A payGroup already exist for employee with id", employeeId);
+      }
+    }
+    return false;
+  }
 
 };

@@ -9,20 +9,20 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.ltp.munstaff.response.error.ErrorResponse;
-import com.ltp.munstaff.response.error.PayGroupNotFoundException;
+import com.ltp.munstaff.response.error.ExistingRecordFoundException;
 import com.ltp.munstaff.response.error.ResourceAlreadyExist;
-import com.ltp.munstaff.response.error.EmployeeNotFoundException;
+import com.ltp.munstaff.response.error.NotFoundException;
 
 @ControllerAdvice
 public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
 
-  @ExceptionHandler({ EmployeeNotFoundException.class, PayGroupNotFoundException.class })
+  @ExceptionHandler({ NotFoundException.class })
   public ResponseEntity<Object> handleEntityNotFoundException(RuntimeException ex, WebRequest request) {
     ErrorResponse errorDetails = new ErrorResponse(true, ex.getMessage(), request.getDescription(false));
     return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
   };
 
-  @ExceptionHandler({ ResourceAlreadyExist.class })
+  @ExceptionHandler({ ResourceAlreadyExist.class, ExistingRecordFoundException.class })
   public ResponseEntity<Object> handleEntityExistException(RuntimeException ex, WebRequest request) {
     ErrorResponse errorDetails = new ErrorResponse(true, ex.getMessage(), request.getDescription(false));
     return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);

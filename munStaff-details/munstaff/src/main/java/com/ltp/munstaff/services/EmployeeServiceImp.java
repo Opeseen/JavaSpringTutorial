@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ltp.munstaff.entity.Employee;
 import com.ltp.munstaff.repository.EmployeeRepository;
-import com.ltp.munstaff.response.error.EmployeeNotFoundException;
+import com.ltp.munstaff.response.error.NotFoundException;
 import com.ltp.munstaff.response.error.ResourceAlreadyExist;
 
 import lombok.AllArgsConstructor;
@@ -35,11 +35,12 @@ public class EmployeeServiceImp implements EmployeeService {
     if (entity.isPresent()) {
       return entity.get();
     }
-    throw new EmployeeNotFoundException(id);
+    throw new NotFoundException("No employee found with id", id);
   };
 
   @Override // GET ALL ENTITY
   public List<Employee> getAllEmployee() {
+
     return (List<Employee>) employeeRepository.findAll();
   };
 
@@ -68,7 +69,7 @@ public class EmployeeServiceImp implements EmployeeService {
   static Employee fetchEmployee(Optional<Employee> entity, Long id) {
     if (entity.isPresent())
       return entity.get();
-    throw new EmployeeNotFoundException(id);
+    throw new NotFoundException("No employee found with id", id);
   };
 
 };
