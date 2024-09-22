@@ -1,5 +1,7 @@
 package com.ltp.munstaff.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,7 +34,7 @@ public class Employee {
   private String city;
   private String nationality;
 
-  @ManyToOne
-  @JoinColumn(name = "paygroupId", referencedColumnName = "id")
-  private PayGroup payGroup;
+  // @ManyToOne
+  // @JoinColumn(name = "paygroupId", referencedColumnName = "id")
+  // private PayGroup payGroup;
 };

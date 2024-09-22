@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ltp.munstaff.entity.Employee;
 import com.ltp.munstaff.repository.EmployeeRepository;
 import com.ltp.munstaff.response.error.EmployeeNotFoundException;
+import com.ltp.munstaff.response.error.ResourceAlreadyExist;
 
 import lombok.AllArgsConstructor;
 
@@ -19,6 +20,12 @@ public class EmployeeServiceImp implements EmployeeService {
 
   @Override // SAVE ENTITY
   public Employee saveEmployee(Employee employee) {
+    if (employeeRepository.existsByEmail(employee.getEmail().toLowerCase().trim())) {
+      throw new ResourceAlreadyExist(employee.getEmail());
+    }
+    employee.setEmail(employee.getEmail().toLowerCase().trim());
+    employee.setLastname(employee.getLastname().toLowerCase().trim());
+    employee.setFirstname(employee.getFirstname().toLowerCase().trim());
     return employeeRepository.save(employee);
   };
 
@@ -28,7 +35,6 @@ public class EmployeeServiceImp implements EmployeeService {
     if (entity.isPresent()) {
       return entity.get();
     }
-    ;
     throw new EmployeeNotFoundException(id);
   };
 
@@ -54,7 +60,7 @@ public class EmployeeServiceImp implements EmployeeService {
   };
 
   @Override // DELETE ENTITY
-  public void deleteEmployee(Long id){
+  public void deleteEmployee(Long id) {
     employeeRepository.deleteById(id);
   };
 
@@ -64,4 +70,5 @@ public class EmployeeServiceImp implements EmployeeService {
       return entity.get();
     throw new EmployeeNotFoundException(id);
   };
+
 };

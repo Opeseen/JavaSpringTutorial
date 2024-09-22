@@ -10,6 +10,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.ltp.munstaff.response.error.ErrorResponse;
 import com.ltp.munstaff.response.error.PayGroupNotFoundException;
+import com.ltp.munstaff.response.error.ResourceAlreadyExist;
 import com.ltp.munstaff.response.error.EmployeeNotFoundException;
 
 @ControllerAdvice
@@ -19,18 +20,24 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
   public ResponseEntity<Object> handleEntityNotFoundException(RuntimeException ex, WebRequest request) {
     ErrorResponse errorDetails = new ErrorResponse(true, ex.getMessage(), request.getDescription(false));
     return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
-  }
+  };
+
+  @ExceptionHandler({ ResourceAlreadyExist.class })
+  public ResponseEntity<Object> handleEntityExistException(RuntimeException ex, WebRequest request) {
+    ErrorResponse errorDetails = new ErrorResponse(true, ex.getMessage(), request.getDescription(false));
+    return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+  };
 
   @ExceptionHandler(DataIntegrityViolationException.class)
   public ResponseEntity<Object> handleDataIntegrityException(DataIntegrityViolationException ex, WebRequest request) {
     ErrorResponse errorDetails = new ErrorResponse(true, ex.getMessage(), request.getDescription(false));
     return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
-  }
+  };
 
   @ExceptionHandler(Exception.class)
   public ResponseEntity<?> globalExceptionHandler(Exception ex, WebRequest request) {
     ErrorResponse errorDetails = new ErrorResponse(true, ex.getMessage(), request.getDescription(false));
     return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
-  }
+  };
 
 }

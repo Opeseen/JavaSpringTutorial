@@ -4,10 +4,14 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.*;
@@ -25,6 +29,7 @@ public class PayGroup {
   private Long id;
 
   @NonNull
+  @Column(unique = true)
   private String category;
   @NonNull
   private Integer basic;
@@ -41,7 +46,9 @@ public class PayGroup {
   private Integer employerPensionContribution;
   private Integer netPay;
 
-  @JsonIgnore
-  @OneToMany(mappedBy = "payGroup")
+  // @JsonIgnore
+  // @OneToMany(mappedBy = "payGroup")
+  @OneToMany
+  @JoinTable(name = "employee_paygroup", joinColumns = @JoinColumn(name = "paygroup_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"))
   private List<Employee> employee;
 };

@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import com.ltp.munstaff.entity.Employee;
-import com.ltp.munstaff.entity.PayGroup;
 import com.ltp.munstaff.response.success.SuccessResponse;
 import com.ltp.munstaff.services.EmployeeService;
 import com.ltp.munstaff.services.PayGroupService;
@@ -46,8 +45,8 @@ public class EmployeeController {
   @PostMapping("/employee")
   public ResponseEntity<Employee> saveEntity(@RequestBody Employee entity,
       @RequestParam(required = false) Long payGroupId) {
-    PayGroup payGroup = payGroupService.FetchPayGroup(payGroupId);
-    entity.setPayGroup(payGroup);
+    // PayGroup payGroup = payGroupService.FetchPayGroup(payGroupId);
+    // entity.setPayGroup(payGroup);
     return new ResponseEntity<>(employeeService.saveEmployee(entity), HttpStatus.CREATED);
   };
 
@@ -57,7 +56,7 @@ public class EmployeeController {
   };
 
   @DeleteMapping("/employee/{id}")
-  public ResponseEntity<HttpStatus> deleteEntity(@PathVariable Long id){
+  public ResponseEntity<HttpStatus> deleteEntity(@PathVariable Long id) {
     employeeService.deleteEmployee(id);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   };

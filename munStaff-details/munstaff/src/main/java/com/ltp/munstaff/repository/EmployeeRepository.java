@@ -7,5 +7,5 @@ import com.ltp.munstaff.entity.Employee;
 
 @Repository
 public interface EmployeeRepository extends CrudRepository<Employee, Long> {
-
+  Boolean existsByEmail(String email);
 };

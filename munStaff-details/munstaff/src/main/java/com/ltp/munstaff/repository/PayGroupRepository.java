@@ -7,5 +7,5 @@ import com.ltp.munstaff.entity.PayGroup;
 
 @Repository
 public interface PayGroupRepository extends CrudRepository<PayGroup, Long> {
-
+  Boolean existsByCategory(String category);
 };
