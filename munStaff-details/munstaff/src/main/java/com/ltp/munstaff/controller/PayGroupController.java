@@ -45,6 +45,11 @@ public class PayGroupController {
     return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };
 
+  @GetMapping("/paygroup/{id}/employee")
+  public ResponseEntity<?> getEntityEmployee(@PathVariable Long id) {
+    return new ResponseEntity<>(payGroupService.getPayGroupEmployee(id), HttpStatus.OK);
+  };
+
   @PutMapping("paygroup/{id}")
   public ResponseEntity<PayGroup> updateEntity(@PathVariable Long id, @RequestBody PayGroup entity) {
     return new ResponseEntity<>(payGroupService.updatePayGroup(entity, id), HttpStatus.OK);

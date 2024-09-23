@@ -1,6 +1,7 @@
 package com.ltp.munstaff.entity;
 
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -48,7 +49,8 @@ public class PayGroup {
 
   // @JsonIgnore
   // @OneToMany(mappedBy = "payGroup")
+  @JsonIgnore
   @OneToMany
   @JoinTable(name = "employee_paygroup", joinColumns = @JoinColumn(name = "paygroup_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"))
-  private List<Employee> employee;
+  private Set<Employee> employee;
 };

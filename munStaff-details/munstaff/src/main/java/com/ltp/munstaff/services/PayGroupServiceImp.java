@@ -1,6 +1,7 @@
 package com.ltp.munstaff.services;
 
 import java.util.List;
+import java.util.Set;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -38,6 +39,12 @@ public class PayGroupServiceImp implements PayGroupService {
       return entity.get();
     }
     throw new NotFoundException("No payGroup found with id", id);
+  };
+
+  @Override
+  public Set<Employee> getPayGroupEmployee(Long id) {
+    PayGroup payGroup = getPayGroup(id);
+    return payGroup.getEmployee();
   };
 
   @Override // GET ALL PAY-GROUP
@@ -84,6 +91,7 @@ public class PayGroupServiceImp implements PayGroupService {
     Employee verifiedEmployee = EmployeeServiceImp.fetchEmployee(employee, employeeId);
 
     // This will throw an error if the employee is already attach to a payGroup
+    // @TODO: There is still a bug in this check..
     checkIsPayGroupAttached(payGroup, employeeId);
 
     payGroup.getEmployee().add(verifiedEmployee);
@@ -105,6 +113,6 @@ public class PayGroupServiceImp implements PayGroupService {
       }
     }
     return false;
-  }
+  };
 
 };

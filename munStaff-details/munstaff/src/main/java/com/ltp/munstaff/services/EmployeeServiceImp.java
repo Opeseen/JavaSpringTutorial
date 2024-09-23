@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.ltp.munstaff.entity.Employee;
+import com.ltp.munstaff.entity.PayGroup;
 import com.ltp.munstaff.repository.EmployeeRepository;
+import com.ltp.munstaff.repository.PayGroupRepository;
 import com.ltp.munstaff.response.error.NotFoundException;
 import com.ltp.munstaff.response.error.ResourceAlreadyExist;
 
@@ -17,8 +19,10 @@ import lombok.AllArgsConstructor;
 public class EmployeeServiceImp implements EmployeeService {
 
   EmployeeRepository employeeRepository;
+  PayGroupRepository payGroupRepository;
+  PayGroupService payGroupService;
 
-  @Override // SAVE ENTITY
+  @Override // SAVE EMPLOYEE
   public Employee saveEmployee(Employee employee) {
     if (employeeRepository.existsByEmail(employee.getEmail().toLowerCase().trim())) {
       throw new ResourceAlreadyExist(employee.getEmail());
@@ -29,7 +33,7 @@ public class EmployeeServiceImp implements EmployeeService {
     return employeeRepository.save(employee);
   };
 
-  @Override // GET SINGLE ENTITY
+  @Override // GET SINGLE EMPLOYEE
   public Employee getEmployee(Long id) {
     Optional<Employee> entity = employeeRepository.findById(id);
     if (entity.isPresent()) {
@@ -38,13 +42,18 @@ public class EmployeeServiceImp implements EmployeeService {
     throw new NotFoundException("No employee found with id", id);
   };
 
-  @Override // GET ALL ENTITY
-  public List<Employee> getAllEmployee() {
+  @Override
+  public PayGroup getEmployeePayGroup(Long id) {
+    Employee employee = getEmployee(id);
+    return employee.getPayGroup();
+  };
 
+  @Override // GET ALL EMPLOYEE
+  public List<Employee> getAllEmployee() {
     return (List<Employee>) employeeRepository.findAll();
   };
 
-  @Override // UPDATE ENTITY
+  @Override // UPDATE EMPLOYEE INFO
   public Employee updateEmployee(Long id, Employee employee) {
     Optional<Employee> entity = employeeRepository.findById(id);
     Employee confirmedEntity = fetchEmployee(entity, id);
@@ -60,12 +69,23 @@ public class EmployeeServiceImp implements EmployeeService {
     return employeeRepository.save(confirmedEntity);
   };
 
-  @Override // DELETE ENTITY
+  @Override
+  public PayGroup updateEmployeePayGroup(Long employeeId, Long payGroupId) {
+    Employee employee = getEmployee(employeeId);
+    PayGroup verifiedPayGroup = payGroupService.getPayGroup(payGroupId);
+
+    employee.setPayGroup(verifiedPayGroup);
+
+    // @TODO:
+    return null;
+  };
+
+  @Override // DELETE EMPLOYEE
   public void deleteEmployee(Long id) {
     employeeRepository.deleteById(id);
   };
 
-  // FIND ENTITY
+  // STATIC FIND EMPLOYEE
   static Employee fetchEmployee(Optional<Employee> entity, Long id) {
     if (entity.isPresent())
       return entity.get();

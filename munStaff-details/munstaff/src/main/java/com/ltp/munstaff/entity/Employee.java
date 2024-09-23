@@ -1,6 +1,6 @@
 package com.ltp.munstaff.entity;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.*;
@@ -37,4 +38,8 @@ public class Employee {
   // @ManyToOne
   // @JoinColumn(name = "paygroupId", referencedColumnName = "id")
   // private PayGroup payGroup;
+  @JsonIgnore
+  @ManyToOne()
+  @JoinTable(name = "employee_paygroup", joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "paygroup_id", referencedColumnName = "id"))
+  private PayGroup payGroup;
 };
