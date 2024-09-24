@@ -14,7 +14,7 @@ public interface EmployeeService {
 
   PayGroup getEmployeePayGroup(Long id);
 
-  PayGroup updateEmployeePayGroup(Long employeeId, Long payGroupId);
+  Employee updateEmployeePayGroup(Long employeeId, Long payGroupId);
 
   List<Employee> getAllEmployee();
 

@@ -46,6 +46,11 @@ public class EmployeeController {
     return new ResponseEntity<>(employeeService.getEmployeePayGroup(id), HttpStatus.OK);
   };
 
+  @PutMapping("/employee/{employeeId}/paygroup/{payGroupId}/update")
+  public ResponseEntity<?> updateEntityPayGroup(@PathVariable Long employeeId, @PathVariable Long payGroupId) {
+    return new ResponseEntity<>(employeeService.updateEmployeePayGroup(employeeId, payGroupId), HttpStatus.OK);
+  };
+
   @PostMapping("/employee")
   public ResponseEntity<Employee> saveEntity(@RequestBody Employee entity) {
     return new ResponseEntity<>(employeeService.saveEmployee(entity), HttpStatus.CREATED);

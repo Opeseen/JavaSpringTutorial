@@ -20,7 +20,6 @@ public class EmployeeServiceImp implements EmployeeService {
 
   EmployeeRepository employeeRepository;
   PayGroupRepository payGroupRepository;
-  PayGroupService payGroupService;
 
   @Override // SAVE EMPLOYEE
   public Employee saveEmployee(Employee employee) {
@@ -36,10 +35,9 @@ public class EmployeeServiceImp implements EmployeeService {
   @Override // GET SINGLE EMPLOYEE
   public Employee getEmployee(Long id) {
     Optional<Employee> entity = employeeRepository.findById(id);
-    if (entity.isPresent()) {
-      return entity.get();
-    }
-    throw new NotFoundException("No employee found with id", id);
+    Employee confirmedEmployee = StaticFetchEmployee(entity, id);
+
+    return confirmedEmployee;
   };
 
   @Override
@@ -56,7 +54,7 @@ public class EmployeeServiceImp implements EmployeeService {
   @Override // UPDATE EMPLOYEE INFO
   public Employee updateEmployee(Long id, Employee employee) {
     Optional<Employee> entity = employeeRepository.findById(id);
-    Employee confirmedEntity = fetchEmployee(entity, id);
+    Employee confirmedEntity = StaticFetchEmployee(entity, id);
     confirmedEntity.setFirstname(employee.getFirstname());
     confirmedEntity.setLastname(employee.getLastname());
     confirmedEntity.setPhone(employee.getPhone());
@@ -70,14 +68,17 @@ public class EmployeeServiceImp implements EmployeeService {
   };
 
   @Override
-  public PayGroup updateEmployeePayGroup(Long employeeId, Long payGroupId) {
+  public Employee updateEmployeePayGroup(Long employeeId, Long payGroupId) {
+    // Verify if an employee exist based on the Id
     Employee employee = getEmployee(employeeId);
-    PayGroup verifiedPayGroup = payGroupService.getPayGroup(payGroupId);
+    // Verify if a payGroup exist based on the Id
+    Optional<PayGroup> payGroup = payGroupRepository.findById(payGroupId);
+    // Verify if an payGroup was returned based on the findById request
+    PayGroup verifiedPayGroup = PayGroupServiceImp.staticFetchPayGroup(payGroup, payGroupId);
 
     employee.setPayGroup(verifiedPayGroup);
 
-    // @TODO:
-    return null;
+    return employeeRepository.save(employee);
   };
 
   @Override // DELETE EMPLOYEE
@@ -86,9 +87,10 @@ public class EmployeeServiceImp implements EmployeeService {
   };
 
   // STATIC FIND EMPLOYEE
-  static Employee fetchEmployee(Optional<Employee> entity, Long id) {
-    if (entity.isPresent())
+  static Employee StaticFetchEmployee(Optional<Employee> entity, Long id) {
+    if (entity.isPresent()){
       return entity.get();
+    }  
     throw new NotFoundException("No employee found with id", id);
   };
 

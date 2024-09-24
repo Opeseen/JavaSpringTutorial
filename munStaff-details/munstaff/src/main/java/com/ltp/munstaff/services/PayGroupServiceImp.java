@@ -87,12 +87,11 @@ public class PayGroupServiceImp implements PayGroupService {
     PayGroup payGroup = getPayGroup(payGroupId);
     // Verify if an employee exist based on the Id
     Optional<Employee> employee = employeeRepository.findById(employeeId);
-    // Verify if an employee was returned based on the findById request //
-    Employee verifiedEmployee = EmployeeServiceImp.fetchEmployee(employee, employeeId);
+    // Verify if an employee was returned based on the findById request
+    Employee verifiedEmployee = EmployeeServiceImp.StaticFetchEmployee(employee, employeeId);
 
     // This will throw an error if the employee is already attach to a payGroup
-    // @TODO: There is still a bug in this check..
-    checkIsPayGroupAttached(payGroup, employeeId);
+    checkIsPayGroupAttached(verifiedEmployee, employeeId);
 
     payGroup.getEmployee().add(verifiedEmployee);
     return payGroupRepository.save(payGroup);
@@ -106,13 +105,11 @@ public class PayGroupServiceImp implements PayGroupService {
   };
 
   // This method will prevent double payGroup for an employee.
-  static Boolean checkIsPayGroupAttached(PayGroup payGroup, Long employeeId) {
-    for (Employee employee : payGroup.getEmployee()) {
-      if (employee.getId().equals(employeeId)) {
-        throw new ExistingRecordFoundException("A payGroup already exist for employee with id", employeeId);
-      }
-    }
-    return false;
+  void checkIsPayGroupAttached(Employee entity, Long employeeId) {
+    PayGroup employeePayGroup = entity.getPayGroup();
+    if(employeePayGroup != null){
+      throw new ExistingRecordFoundException("A payGroup already exist for employee with id", employeeId);
+    };
   };
 
 };
