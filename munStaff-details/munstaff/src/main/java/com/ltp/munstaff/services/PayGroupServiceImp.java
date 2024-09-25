@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ltp.munstaff.entity.Employee;
 import com.ltp.munstaff.entity.PayGroup;
+import com.ltp.munstaff.helper.Helpers;
 import com.ltp.munstaff.repository.EmployeeRepository;
 import com.ltp.munstaff.repository.PayGroupRepository;
 import com.ltp.munstaff.response.error.ExistingRecordFoundException;
@@ -29,6 +30,8 @@ public class PayGroupServiceImp implements PayGroupService {
       throw new ResourceAlreadyExist(payGroup.getCategory());
     }
     payGroup.setCategory(payGroup.getCategory().toLowerCase().trim());
+    payGroup.setGrossPay(Helpers.generateGrossPay(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport(), payGroup.getUtility()));
+    
     return payGroupRepository.save(payGroup);
   };
 

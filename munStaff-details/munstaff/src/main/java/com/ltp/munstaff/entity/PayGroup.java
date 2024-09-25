@@ -1,11 +1,10 @@
 package com.ltp.munstaff.entity;
 
-import java.util.List;
+import java.math.BigDecimal;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,19 +32,19 @@ public class PayGroup {
   @Column(unique = true)
   private String category;
   @NonNull
-  private Integer basic;
+  private BigDecimal basic;
   @NonNull
-  private Integer housing;
+  private BigDecimal housing;
   @NonNull
-  private Integer transport;
+  private BigDecimal transport;
   @NonNull
-  private Integer utility;
+  private BigDecimal utility;
   @NonNull
-  private Integer grossPay;
-  private Integer tax;
-  private Integer employeePensionContribution;
-  private Integer employerPensionContribution;
-  private Integer netPay;
+  private BigDecimal grossPay;
+  private BigDecimal tax;
+  private BigDecimal employeePensionContribution;
+  private BigDecimal employerPensionContribution;
+  private BigDecimal netPay;
 
   // @JsonIgnore
   // @OneToMany(mappedBy = "payGroup")
