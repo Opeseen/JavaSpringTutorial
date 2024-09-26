@@ -27,10 +27,12 @@ public class PayGroupServiceImp implements PayGroupService {
   @Override // SAVE PAY-GROUP
   public PayGroup savePayGroup(PayGroup payGroup) {
     if (payGroupRepository.existsByCategory(payGroup.getCategory().toLowerCase().trim())) {
-      throw new ResourceAlreadyExist(payGroup.getCategory());
-    }
+      throw new ResourceAlreadyExist("A payGroup category already exist in our record with the name",payGroup.getCategory());
+    };
     payGroup.setCategory(payGroup.getCategory().toLowerCase().trim());
     payGroup.setGrossPay(Helpers.generateGrossPay(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport(), payGroup.getUtility()));
+    payGroup.setEmployeePensionContribution(Helpers.generateEmployeePension(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport()));
+    payGroup.setEmployerPensionContribution(Helpers.generateEmployerPension(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport()));
     
     return payGroupRepository.save(payGroup);
   };
@@ -70,11 +72,21 @@ public class PayGroupServiceImp implements PayGroupService {
   public PayGroup updatePayGroup(PayGroup payGroup, Long id) {
     Optional<PayGroup> entity = payGroupRepository.findById(id);
     PayGroup confirmedEntity = staticFetchPayGroup(entity, id);
+    
+    // @TODO:
+    // Check if the payGroup category name to be updated to already exist in the database
+    // @TODO:
+
     confirmedEntity.setCategory(payGroup.getCategory());
     confirmedEntity.setBasic(payGroup.getBasic());
     confirmedEntity.setHousing(payGroup.getHousing());
     confirmedEntity.setTransport(payGroup.getTransport());
     confirmedEntity.setUtility(payGroup.getUtility());
+    confirmedEntity.setTax(payGroup.getTax());
+
+    confirmedEntity.setGrossPay(Helpers.generateGrossPay(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport(), payGroup.getUtility()));
+    confirmedEntity.setEmployeePensionContribution(Helpers.generateEmployeePension(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport()));
+    confirmedEntity.setEmployerPensionContribution(Helpers.generateEmployerPension(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport()));
 
     return payGroupRepository.save(confirmedEntity);
   };
