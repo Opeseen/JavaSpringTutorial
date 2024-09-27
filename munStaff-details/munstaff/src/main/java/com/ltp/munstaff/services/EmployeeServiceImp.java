@@ -24,7 +24,7 @@ public class EmployeeServiceImp implements EmployeeService {
   @Override // SAVE EMPLOYEE
   public Employee saveEmployee(Employee employee) {
     if (employeeRepository.existsByEmail(employee.getEmail().toLowerCase().trim())) {
-      throw new ResourceAlreadyExist("Employee email already exist",employee.getEmail());
+      throw new ResourceAlreadyExist("An employee already exist in our record with the email", employee.getEmail());
     }
     employee.setEmail(employee.getEmail().toLowerCase().trim());
     employee.setLastname(employee.getLastname().toLowerCase().trim());
@@ -55,6 +55,11 @@ public class EmployeeServiceImp implements EmployeeService {
   public Employee updateEmployee(Long id, Employee employee) {
     Optional<Employee> entity = employeeRepository.findById(id);
     Employee confirmedEntity = StaticFetchEmployee(entity, id);
+
+    if (!confirmedEntity.getEmail().equals(employee.getEmail())) {
+      ExistingRecordFound(employee);
+    }
+
     confirmedEntity.setFirstname(employee.getFirstname());
     confirmedEntity.setLastname(employee.getLastname());
     confirmedEntity.setPhone(employee.getPhone());
@@ -86,11 +91,18 @@ public class EmployeeServiceImp implements EmployeeService {
     employeeRepository.deleteById(id);
   };
 
+  void ExistingRecordFound(Employee employee) {
+    if (employeeRepository.existsByEmail(employee.getEmail().toLowerCase().trim())) {
+      throw new ResourceAlreadyExist("An employee already exist in our record with the email",
+          employee.getEmail());
+    }
+  };
+
   // STATIC FIND EMPLOYEE
   static Employee StaticFetchEmployee(Optional<Employee> entity, Long id) {
-    if (entity.isPresent()){
+    if (entity.isPresent()) {
       return entity.get();
-    }  
+    }
     throw new NotFoundException("No employee found with id", id);
   };
 

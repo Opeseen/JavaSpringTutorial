@@ -27,13 +27,18 @@ public class PayGroupServiceImp implements PayGroupService {
   @Override // SAVE PAY-GROUP
   public PayGroup savePayGroup(PayGroup payGroup) {
     if (payGroupRepository.existsByCategory(payGroup.getCategory().toLowerCase().trim())) {
-      throw new ResourceAlreadyExist("A payGroup category already exist in our record with the name",payGroup.getCategory());
-    };
+      throw new ResourceAlreadyExist("A payGroup category already exist in our record with the name",
+          payGroup.getCategory());
+    }
+    ;
     payGroup.setCategory(payGroup.getCategory().toLowerCase().trim());
-    payGroup.setGrossPay(Helpers.generateGrossPay(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport(), payGroup.getUtility()));
-    payGroup.setEmployeePensionContribution(Helpers.generateEmployeePension(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport()));
-    payGroup.setEmployerPensionContribution(Helpers.generateEmployerPension(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport()));
-    
+    payGroup.setGrossPay(Helpers.generateGrossPay(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport(),
+        payGroup.getUtility()));
+    payGroup.setEmployeePensionContribution(
+        Helpers.generateEmployeePension(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport()));
+    payGroup.setEmployerPensionContribution(
+        Helpers.generateEmployerPension(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport()));
+
     return payGroupRepository.save(payGroup);
   };
 
@@ -72,10 +77,10 @@ public class PayGroupServiceImp implements PayGroupService {
   public PayGroup updatePayGroup(PayGroup payGroup, Long id) {
     Optional<PayGroup> entity = payGroupRepository.findById(id);
     PayGroup confirmedEntity = staticFetchPayGroup(entity, id);
-    
-    // @TODO:
-    // Check if the payGroup category name to be updated to already exist in the database
-    // @TODO:
+
+    if (!confirmedEntity.getCategory().equals(payGroup.getCategory())) {
+      ExistingRecordFound(payGroup);
+    }
 
     confirmedEntity.setCategory(payGroup.getCategory());
     confirmedEntity.setBasic(payGroup.getBasic());
@@ -84,9 +89,12 @@ public class PayGroupServiceImp implements PayGroupService {
     confirmedEntity.setUtility(payGroup.getUtility());
     confirmedEntity.setTax(payGroup.getTax());
 
-    confirmedEntity.setGrossPay(Helpers.generateGrossPay(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport(), payGroup.getUtility()));
-    confirmedEntity.setEmployeePensionContribution(Helpers.generateEmployeePension(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport()));
-    confirmedEntity.setEmployerPensionContribution(Helpers.generateEmployerPension(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport()));
+    confirmedEntity.setGrossPay(Helpers.generateGrossPay(payGroup.getBasic(),
+        payGroup.getHousing(), payGroup.getTransport(), payGroup.getUtility()));
+    confirmedEntity.setEmployeePensionContribution(
+        Helpers.generateEmployeePension(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport()));
+    confirmedEntity.setEmployerPensionContribution(
+        Helpers.generateEmployerPension(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport()));
 
     return payGroupRepository.save(confirmedEntity);
   };
@@ -112,19 +120,27 @@ public class PayGroupServiceImp implements PayGroupService {
     return payGroupRepository.save(payGroup);
   };
 
+  // This method will prevent double payGroup for an employee.
+  void checkIsPayGroupAttached(Employee entity, Long employeeId) {
+    PayGroup employeePayGroup = entity.getPayGroup();
+    if (employeePayGroup != null) {
+      throw new ExistingRecordFoundException("A payGroup already exist for employee with id", employeeId);
+    }
+    ;
+  };
+
+  void ExistingRecordFound(PayGroup payGroup) {
+    if (payGroupRepository.existsByCategory(payGroup.getCategory().toLowerCase().trim())) {
+      throw new ResourceAlreadyExist("A payGroup category already exist in our record with the name",
+          payGroup.getCategory());
+    }
+  };
+
   // STATIC FIND ENTITY
   static PayGroup staticFetchPayGroup(Optional<PayGroup> entity, Long id) {
     if (entity.isPresent())
       return entity.get();
     throw new NotFoundException("No payGroup found with id", id);
-  };
-
-  // This method will prevent double payGroup for an employee.
-  void checkIsPayGroupAttached(Employee entity, Long employeeId) {
-    PayGroup employeePayGroup = entity.getPayGroup();
-    if(employeePayGroup != null){
-      throw new ExistingRecordFoundException("A payGroup already exist for employee with id", employeeId);
-    };
   };
 
 };
