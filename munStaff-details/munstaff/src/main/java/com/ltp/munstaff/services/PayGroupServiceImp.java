@@ -1,5 +1,6 @@
 package com.ltp.munstaff.services;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 import java.util.Optional;
@@ -31,13 +32,19 @@ public class PayGroupServiceImp implements PayGroupService {
           payGroup.getCategory());
     }
     ;
+    BigDecimal GrossPay = Helpers.generateGrossPay(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport(),
+        payGroup.getUtility());
+    BigDecimal EmployeePension = Helpers.generateEmployeePension(payGroup.getBasic(), payGroup.getHousing(),
+        payGroup.getTransport());
+    BigDecimal EmployerPension = Helpers.generateEmployerPension(payGroup.getBasic(), payGroup.getHousing(),
+        payGroup.getTransport());
+    BigDecimal NetPay = Helpers.generateNetPay(GrossPay, payGroup.getTax(), EmployeePension);
+
     payGroup.setCategory(payGroup.getCategory().toLowerCase().trim());
-    payGroup.setGrossPay(Helpers.generateGrossPay(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport(),
-        payGroup.getUtility()));
-    payGroup.setEmployeePensionContribution(
-        Helpers.generateEmployeePension(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport()));
-    payGroup.setEmployerPensionContribution(
-        Helpers.generateEmployerPension(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport()));
+    payGroup.setGrossPay(GrossPay);
+    payGroup.setEmployeePensionContribution(EmployeePension);
+    payGroup.setEmployerPensionContribution(EmployerPension);
+    payGroup.setNetPay(NetPay);
 
     return payGroupRepository.save(payGroup);
   };
@@ -82,6 +89,14 @@ public class PayGroupServiceImp implements PayGroupService {
       ExistingRecordFound(payGroup);
     }
 
+    BigDecimal GrossPay = Helpers.generateGrossPay(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport(),
+        payGroup.getUtility());
+    BigDecimal EmployeePension = Helpers.generateEmployeePension(payGroup.getBasic(), payGroup.getHousing(),
+        payGroup.getTransport());
+    BigDecimal EmployerPension = Helpers.generateEmployerPension(payGroup.getBasic(), payGroup.getHousing(),
+        payGroup.getTransport());
+    BigDecimal NetPay = Helpers.generateNetPay(GrossPay, payGroup.getTax(), EmployeePension);
+
     confirmedEntity.setCategory(payGroup.getCategory());
     confirmedEntity.setBasic(payGroup.getBasic());
     confirmedEntity.setHousing(payGroup.getHousing());
@@ -89,12 +104,10 @@ public class PayGroupServiceImp implements PayGroupService {
     confirmedEntity.setUtility(payGroup.getUtility());
     confirmedEntity.setTax(payGroup.getTax());
 
-    confirmedEntity.setGrossPay(Helpers.generateGrossPay(payGroup.getBasic(),
-        payGroup.getHousing(), payGroup.getTransport(), payGroup.getUtility()));
-    confirmedEntity.setEmployeePensionContribution(
-        Helpers.generateEmployeePension(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport()));
-    confirmedEntity.setEmployerPensionContribution(
-        Helpers.generateEmployerPension(payGroup.getBasic(), payGroup.getHousing(), payGroup.getTransport()));
+    confirmedEntity.setGrossPay(GrossPay);
+    confirmedEntity.setEmployeePensionContribution(EmployeePension);
+    confirmedEntity.setEmployerPensionContribution(EmployerPension);
+    confirmedEntity.setNetPay(NetPay);
 
     return payGroupRepository.save(confirmedEntity);
   };
