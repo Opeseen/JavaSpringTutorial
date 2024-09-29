@@ -56,7 +56,7 @@ public class PayGroupController {
   };
 
   @PutMapping("paygroup/{payGroupId}/employee/{employeeId}")
-  public ResponseEntity<PayGroup> addEmployeeToPayGroup(@PathVariable Long payGroupId, @PathVariable Long employeeId) {
+  public ResponseEntity<PayGroup> addEntityToPayGroup(@PathVariable Long payGroupId, @PathVariable Long employeeId) {
     return new ResponseEntity<>(payGroupService.addEmployeeToPayGroup(employeeId, payGroupId), HttpStatus.OK);
   };
 
