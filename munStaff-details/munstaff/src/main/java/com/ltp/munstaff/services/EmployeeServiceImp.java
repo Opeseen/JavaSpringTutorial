@@ -73,7 +73,7 @@ public class EmployeeServiceImp implements EmployeeService {
   };
 
   @Override
-  public Employee updateEmployeePayGroup(Long employeeId, Long payGroupId) {
+  public Employee updateEmployeePayGroup(Long employeeId, Long payGroupId, String type) {
     // Verify if an employee exist based on the Id
     Employee employee = getEmployee(employeeId);
     // Verify if a payGroup exist based on the Id
@@ -81,8 +81,12 @@ public class EmployeeServiceImp implements EmployeeService {
     // Verify if an payGroup was returned based on the findById request
     PayGroup verifiedPayGroup = PayGroupServiceImp.staticFetchPayGroup(payGroup, payGroupId);
 
-    employee.setPayGroup(verifiedPayGroup);
+    if (type != null && type.equals("delete")) {
+      employee.setPayGroup(null);
+      return employeeRepository.save(employee);
+    }
 
+    employee.setPayGroup(verifiedPayGroup);
     return employeeRepository.save(employee);
   };
 

@@ -14,6 +14,7 @@ import com.ltp.munstaff.services.PayGroupService;
 import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -47,8 +48,9 @@ public class EmployeeController {
   };
 
   @PutMapping("/employee/{employeeId}/paygroup/{payGroupId}/update")
-  public ResponseEntity<?> updateEntityPayGroup(@PathVariable Long employeeId, @PathVariable Long payGroupId) {
-    return new ResponseEntity<>(employeeService.updateEmployeePayGroup(employeeId, payGroupId), HttpStatus.OK);
+  public ResponseEntity<?> updateEntityPayGroup(@PathVariable Long employeeId, @PathVariable Long payGroupId,
+      @RequestParam(required = false) String type) {
+    return new ResponseEntity<>(employeeService.updateEmployeePayGroup(employeeId, payGroupId, type), HttpStatus.OK);
   };
 
   @PostMapping("/employee")
