@@ -148,7 +148,7 @@ public class PayGroupServiceImp implements PayGroupService {
     }
   };
 
-  // STATIC FIND ENTITY
+  // STATIC FIND PAYGROUP
   static PayGroup staticFetchPayGroup(Optional<PayGroup> entity, Long id) {
     if (entity.isPresent())
       return entity.get();
