@@ -9,7 +9,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.ltp.munstaff.response.error.ErrorResponse;
-import com.ltp.munstaff.response.error.ExistingRecordFoundException;
 import com.ltp.munstaff.response.error.ResourceAlreadyExist;
 import com.ltp.munstaff.response.error.NotFoundException;
 
@@ -22,7 +21,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
   };
 
-  @ExceptionHandler({ ResourceAlreadyExist.class, ExistingRecordFoundException.class })
+  @ExceptionHandler({ ResourceAlreadyExist.class })
   public ResponseEntity<Object> handleEntityExistException(RuntimeException ex, WebRequest request) {
     ErrorResponse errorDetails = new ErrorResponse(true, ex.getMessage(), request.getDescription(false));
     return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);

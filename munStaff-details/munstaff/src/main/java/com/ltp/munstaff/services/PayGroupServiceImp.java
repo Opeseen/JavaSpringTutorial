@@ -12,7 +12,6 @@ import com.ltp.munstaff.entity.PayGroup;
 import com.ltp.munstaff.helper.Helpers;
 import com.ltp.munstaff.repository.EmployeeRepository;
 import com.ltp.munstaff.repository.PayGroupRepository;
-import com.ltp.munstaff.response.error.ExistingRecordFoundException;
 import com.ltp.munstaff.response.error.NotFoundException;
 import com.ltp.munstaff.response.error.ResourceAlreadyExist;
 
@@ -137,7 +136,7 @@ public class PayGroupServiceImp implements PayGroupService {
   void checkIsPayGroupAttached(Employee entity, Long employeeId) {
     PayGroup employeePayGroup = entity.getPayGroup();
     if (employeePayGroup != null) {
-      throw new ExistingRecordFoundException("A payGroup already exist for employee with id", employeeId);
+      throw new ResourceAlreadyExist("A payGroup already exist for employee with id", String.valueOf(employeeId));
     }
     ;
   };
