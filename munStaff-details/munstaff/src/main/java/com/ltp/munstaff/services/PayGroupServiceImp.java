@@ -12,6 +12,7 @@ import com.ltp.munstaff.entity.PayGroup;
 import com.ltp.munstaff.helper.Helpers;
 import com.ltp.munstaff.repository.EmployeeRepository;
 import com.ltp.munstaff.repository.PayGroupRepository;
+import com.ltp.munstaff.response.Constant.ConstantResponse;
 import com.ltp.munstaff.response.error.NotFoundException;
 import com.ltp.munstaff.response.error.ResourceAlreadyExist;
 
@@ -117,7 +118,7 @@ public class PayGroupServiceImp implements PayGroupService {
   };
 
   @Override
-  public PayGroup addEmployeeToPayGroup(Long employeeId, Long payGroupId) {
+  public String addEmployeeToPayGroup(Long employeeId, Long payGroupId) {
     // Verify if a pay group exist based on the Id
     PayGroup payGroup = getPayGroup(payGroupId);
     // Verify if an employee exist based on the Id
@@ -129,7 +130,10 @@ public class PayGroupServiceImp implements PayGroupService {
     checkIsPayGroupAttached(verifiedEmployee, employeeId);
 
     payGroup.getEmployee().add(verifiedEmployee);
-    return payGroupRepository.save(payGroup);
+    // Save the record to the payGroup Table
+    payGroupRepository.save(payGroup);
+
+    return ConstantResponse.Employee_Added;
   };
 
   // This method will prevent double payGroup for an employee.

@@ -21,5 +21,5 @@ public interface PayGroupService {
 
   void deletePayGroup(Long id);
 
-  PayGroup addEmployeeToPayGroup(Long employeeId, Long payGroupId);
+  String addEmployeeToPayGroup(Long employeeId, Long payGroupId);
 };

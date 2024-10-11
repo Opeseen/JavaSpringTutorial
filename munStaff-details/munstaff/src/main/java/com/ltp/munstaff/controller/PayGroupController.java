@@ -1,6 +1,7 @@
 package com.ltp.munstaff.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ltp.munstaff.entity.Employee;
 import com.ltp.munstaff.entity.PayGroup;
+import com.ltp.munstaff.response.Constant.ConstantResponse;
 import com.ltp.munstaff.response.success.SuccessResponse;
 import com.ltp.munstaff.services.PayGroupService;
 
@@ -25,39 +28,54 @@ import org.springframework.web.bind.annotation.PutMapping;
 @AllArgsConstructor
 @RequestMapping("/mundial")
 public class PayGroupController {
-
+  // AN "ENTITY" IS REFERRED TO AS THE PAY-GROUP
   PayGroupService payGroupService;
 
   @PostMapping("/paygroup")
-  public ResponseEntity<PayGroup> saveEntity(@RequestBody PayGroup entity, @RequestParam(required = false) Long id) {
-    return new ResponseEntity<>(payGroupService.savePayGroup(entity), HttpStatus.CREATED);
+  public ResponseEntity<?> saveEntity(@RequestBody PayGroup entity, @RequestParam(required = false) Long id) {
+    PayGroup newEntity = payGroupService.savePayGroup(entity);
+    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.Single, ConstantResponse.payGroup_Saved,
+        newEntity);
+    return new ResponseEntity<>(successDetails, HttpStatus.CREATED);
   };
 
   @GetMapping("/paygroup/{id}")
-  public ResponseEntity<PayGroup> getEntity(@PathVariable Long id) {
-    return new ResponseEntity<>(payGroupService.getPayGroup(id), HttpStatus.OK);
+  public ResponseEntity<?> getEntity(@PathVariable Long id) {
+    PayGroup entity = payGroupService.getPayGroup(id);
+    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.Single, ConstantResponse.Success,
+        entity);
+    return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };
 
   @GetMapping("/paygroup/all")
   public ResponseEntity<?> getAllEntity() {
     List<PayGroup> entity = payGroupService.getAllPayGroup();
-    SuccessResponse successDetails = new SuccessResponse(true, entity.size(), entity, null);
+    SuccessResponse successDetails = new SuccessResponse(true, entity.size(), ConstantResponse.Success, entity);
     return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };
 
   @GetMapping("/paygroup/{id}/employee")
   public ResponseEntity<?> getEntityEmployee(@PathVariable Long id) {
-    return new ResponseEntity<>(payGroupService.getPayGroupEmployee(id), HttpStatus.OK);
+    Set<Employee> entityEmployee = payGroupService.getPayGroupEmployee(id);
+    SuccessResponse successDetails = new SuccessResponse(true, entityEmployee.size(), ConstantResponse.Success,
+        entityEmployee);
+    return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };
 
   @PutMapping("paygroup/{id}")
-  public ResponseEntity<PayGroup> updateEntity(@PathVariable Long id, @RequestBody PayGroup entity) {
-    return new ResponseEntity<>(payGroupService.updatePayGroup(entity, id), HttpStatus.OK);
+  public ResponseEntity<?> updateEntity(@PathVariable Long id, @RequestBody PayGroup entity) {
+    PayGroup updatedEntity = payGroupService.updatePayGroup(entity, id);
+    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.Single, ConstantResponse.Success,
+        updatedEntity);
+    return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };
 
   @PutMapping("paygroup/{payGroupId}/employee/{employeeId}")
-  public ResponseEntity<PayGroup> addEntityToPayGroup(@PathVariable Long payGroupId, @PathVariable Long employeeId) {
-    return new ResponseEntity<>(payGroupService.addEmployeeToPayGroup(employeeId, payGroupId), HttpStatus.OK);
+  public ResponseEntity<?> addEntityToPayGroup(@PathVariable Long payGroupId, @PathVariable Long employeeId) {
+    String entity = payGroupService.addEmployeeToPayGroup(employeeId, payGroupId);
+    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.Single, ConstantResponse.Success,
+        entity);
+    return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };
 
   @DeleteMapping("/paygroup/{id}")

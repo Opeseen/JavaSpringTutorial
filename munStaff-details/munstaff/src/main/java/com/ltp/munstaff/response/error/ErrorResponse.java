@@ -11,11 +11,11 @@ import lombok.*;
 public class ErrorResponse {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
   private Boolean error;
-  private String message;
-  private String details;
+  private Object message;
+  private Object details;
   private LocalDateTime timestamp;
-  
-  public ErrorResponse(Boolean error, String message, String details) {
+
+  public ErrorResponse(Boolean error, Object message, Object details) {
     super();
     this.error = error;
     this.message = message;
