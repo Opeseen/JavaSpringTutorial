@@ -46,8 +46,6 @@ public class PayGroup {
   private BigDecimal employerPensionContribution;
   private BigDecimal netPay;
 
-  // @JsonIgnore
-  // @OneToMany(mappedBy = "payGroup")
   @JsonIgnore
   @OneToMany
   @JoinTable(name = "employee_paygroup", joinColumns = @JoinColumn(name = "paygroup_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"))

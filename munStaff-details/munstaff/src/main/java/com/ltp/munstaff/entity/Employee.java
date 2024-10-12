@@ -35,9 +35,6 @@ public class Employee {
   private String city;
   private String nationality;
 
-  // @ManyToOne
-  // @JoinColumn(name = "paygroupId", referencedColumnName = "id")
-  // private PayGroup payGroup;
   @JsonIgnore
   @ManyToOne()
   @JoinTable(name = "employee_paygroup", joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "paygroup_id", referencedColumnName = "id"))
