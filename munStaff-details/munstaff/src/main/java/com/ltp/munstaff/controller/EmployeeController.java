@@ -58,14 +58,15 @@ public class EmployeeController {
   @GetMapping("/employee/{id}/paygroup")
   public ResponseEntity<?> getEntityPayGroup(@PathVariable Long id) {
     PayGroup entityPayGroup = employeeService.getEmployeePayGroup(id);
-    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.Single, ConstantResponse.Success,
-        entityPayGroup);
+    SuccessResponse successDetails = new SuccessResponse(true, entityPayGroup != null ? ConstantResponse.Single : null,
+        ConstantResponse.Success, entityPayGroup);
     return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };
 
   @PutMapping("/employee/{id}")
   public ResponseEntity<?> updateEntity(@PathVariable Long id, @RequestBody Employee entity) {
     Employee updatedEntity = employeeService.updateEmployee(id, entity);
+
     SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.Single, ConstantResponse.Success,
         updatedEntity);
     return new ResponseEntity<>(successDetails, HttpStatus.OK);
