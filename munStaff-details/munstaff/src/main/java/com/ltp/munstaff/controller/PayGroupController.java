@@ -34,7 +34,8 @@ public class PayGroupController {
   @PostMapping("/paygroup")
   public ResponseEntity<?> saveEntity(@RequestBody PayGroup entity, @RequestParam(required = false) Long id) {
     PayGroup newEntity = payGroupService.savePayGroup(entity);
-    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.Single, ConstantResponse.payGroup_Saved,
+    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.SingleRecordResponse,
+        ConstantResponse.CreatePayGroupResponse,
         newEntity);
     return new ResponseEntity<>(successDetails, HttpStatus.CREATED);
   };
@@ -42,7 +43,8 @@ public class PayGroupController {
   @GetMapping("/paygroup/{id}")
   public ResponseEntity<?> getEntity(@PathVariable Long id) {
     PayGroup entity = payGroupService.getPayGroup(id);
-    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.Single, ConstantResponse.Success,
+    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.SingleRecordResponse,
+        ConstantResponse.SuccessResponse,
         entity);
     return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };
@@ -50,14 +52,15 @@ public class PayGroupController {
   @GetMapping("/paygroup/all")
   public ResponseEntity<?> getAllEntity() {
     List<PayGroup> entity = payGroupService.getAllPayGroup();
-    SuccessResponse successDetails = new SuccessResponse(true, entity.size(), ConstantResponse.Success, entity);
+    SuccessResponse successDetails = new SuccessResponse(true, entity.size(), ConstantResponse.SuccessResponse, entity);
     return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };
 
   @GetMapping("/paygroup/{id}/employee")
   public ResponseEntity<?> getEntityEmployee(@PathVariable Long id) {
     Set<Employee> entityEmployee = payGroupService.getPayGroupEmployee(id);
-    SuccessResponse successDetails = new SuccessResponse(true, entityEmployee.size(), ConstantResponse.Success,
+    SuccessResponse successDetails = new SuccessResponse(true, entityEmployee.size(),
+        ConstantResponse.SingleRecordResponse,
         entityEmployee);
     return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };
@@ -65,7 +68,8 @@ public class PayGroupController {
   @PutMapping("paygroup/{id}")
   public ResponseEntity<?> updateEntity(@PathVariable Long id, @RequestBody PayGroup entity) {
     PayGroup updatedEntity = payGroupService.updatePayGroup(entity, id);
-    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.Single, ConstantResponse.Success,
+    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.SingleRecordResponse,
+        ConstantResponse.SuccessResponse,
         updatedEntity);
     return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };
@@ -73,7 +77,8 @@ public class PayGroupController {
   @PutMapping("paygroup/{payGroupId}/employee/{employeeId}")
   public ResponseEntity<?> addEntityToPayGroup(@PathVariable Long payGroupId, @PathVariable Long employeeId) {
     String entity = payGroupService.addEmployeeToPayGroup(employeeId, payGroupId);
-    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.Single, ConstantResponse.Success,
+    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.SingleRecordResponse,
+        ConstantResponse.SuccessResponse,
         entity);
     return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };

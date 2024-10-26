@@ -1,9 +1,9 @@
 package com.ltp.munstaff.response.Constant;
 
 public class ConstantResponse {
-  public static final String payGroup_Saved = "PayGroup Successfully Saved";
-  public static final String Employee_Saved = "Employee Successfully Saved";
-  public static final String Employee_Added = "Employee Successfully Added";
-  public static final String Success = "Request Successful";
-  public static final int Single = 1;
+  public static final String CreatePayGroupResponse = "PayGroup Successfully Created";
+  public static final String CreateEmployeeResponse = "Employee Successfully Created";
+  public static final String AddEmployeePayGroupResponse = "Employee PayGroup Successfully Added";
+  public static final String SuccessResponse = "Request Successful";
+  public static final int SingleRecordResponse = 1;
 };

@@ -133,7 +133,7 @@ public class PayGroupServiceImp implements PayGroupService {
     // Save the record to the payGroup Table
     payGroupRepository.save(payGroup);
 
-    return ConstantResponse.Employee_Added;
+    return ConstantResponse.AddEmployeePayGroupResponse;
   };
 
   // This method will prevent double payGroup for an employee.

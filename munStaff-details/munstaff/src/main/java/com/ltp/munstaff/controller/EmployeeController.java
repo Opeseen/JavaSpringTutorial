@@ -35,7 +35,8 @@ public class EmployeeController {
   @PostMapping("/employee")
   public ResponseEntity<?> saveEntity(@RequestBody Employee entity) {
     Employee newEntity = employeeService.saveEmployee(entity);
-    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.Single, ConstantResponse.Employee_Saved,
+    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.SingleRecordResponse,
+        ConstantResponse.CreateEmployeeResponse,
         newEntity);
     return new ResponseEntity<>(successDetails, HttpStatus.CREATED);
   };
@@ -43,7 +44,8 @@ public class EmployeeController {
   @GetMapping("/employee/{id}")
   public ResponseEntity<?> getEntity(@PathVariable Long id) {
     Employee entity = employeeService.getEmployee(id);
-    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.Single, ConstantResponse.Success,
+    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.SingleRecordResponse,
+        ConstantResponse.SuccessResponse,
         entity);
     return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };
@@ -51,15 +53,17 @@ public class EmployeeController {
   @GetMapping("/employee/all")
   public ResponseEntity<?> getAllEntity() {
     List<Employee> entity = employeeService.getAllEmployee();
-    SuccessResponse successDetails = new SuccessResponse(true, entity.size(), ConstantResponse.Success, entity);
+    SuccessResponse successDetails = new SuccessResponse(true, entity.size(), ConstantResponse.SuccessResponse, entity);
     return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };
 
   @GetMapping("/employee/{id}/paygroup")
   public ResponseEntity<?> getEntityPayGroup(@PathVariable Long id) {
     PayGroup entityPayGroup = employeeService.getEmployeePayGroup(id);
-    SuccessResponse successDetails = new SuccessResponse(true, entityPayGroup != null ? ConstantResponse.Single : null,
-        ConstantResponse.Success, entityPayGroup);
+    SuccessResponse successDetails = new SuccessResponse(true,
+        entityPayGroup != null ? ConstantResponse.SingleRecordResponse : null,
+        entityPayGroup != null ? ConstantResponse.SuccessResponse : "No PayGroup exist for the employee",
+        entityPayGroup);
     return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };
 
@@ -67,7 +71,8 @@ public class EmployeeController {
   public ResponseEntity<?> updateEntity(@PathVariable Long id, @RequestBody Employee entity) {
     Employee updatedEntity = employeeService.updateEmployee(id, entity);
 
-    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.Single, ConstantResponse.Success,
+    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.SingleRecordResponse,
+        ConstantResponse.SuccessResponse,
         updatedEntity);
     return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };
@@ -76,7 +81,8 @@ public class EmployeeController {
   public ResponseEntity<?> updateEntityPayGroup(@PathVariable Long employeeId, @PathVariable Long payGroupId,
       @RequestParam(required = false) String type) {
     Employee entity = employeeService.updateEmployeePayGroup(employeeId, payGroupId, type);
-    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.Single, ConstantResponse.Success,
+    SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.SingleRecordResponse,
+        ConstantResponse.SuccessResponse,
         entity);
     return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };
