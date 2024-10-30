@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/mundial")
+@RequestMapping("api/mun/v1")
 public class EmployeeController {
   // AN "ENTITY" IS REFERRED TO AS AN EMPLOYEE
   EmployeeService employeeService;

@@ -69,17 +69,6 @@ public class PayGroupServiceImp implements PayGroupService {
     return (List<PayGroup>) payGroupRepository.findAll();
   };
 
-  @Override // FETCH PAY-GROUP
-  public PayGroup FetchPayGroup(Long id) {
-    if (id != null) {
-      Optional<PayGroup> entity = payGroupRepository.findById(id);
-      if (entity.isPresent()) {
-        return entity.get();
-      }
-    }
-    return null;
-  };
-
   @Override // UPDATE PAY-GROUP
   public PayGroup updatePayGroup(PayGroup payGroup, Long id) {
     Optional<PayGroup> entity = payGroupRepository.findById(id);

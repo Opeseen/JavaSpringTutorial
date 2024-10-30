@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/mundial")
+@RequestMapping("/api/mun/v1")
 public class PayGroupController {
   // AN "ENTITY" IS REFERRED TO AS THE PAY-GROUP
   PayGroupService payGroupService;

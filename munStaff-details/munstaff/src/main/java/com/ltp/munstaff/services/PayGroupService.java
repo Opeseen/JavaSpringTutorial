@@ -9,8 +9,6 @@ import com.ltp.munstaff.entity.PayGroup;
 public interface PayGroupService {
   PayGroup savePayGroup(PayGroup payGroup);
 
-  PayGroup FetchPayGroup(Long id);
-
   PayGroup getPayGroup(Long id);
 
   Set<Employee> getPayGroupEmployee(Long id);
