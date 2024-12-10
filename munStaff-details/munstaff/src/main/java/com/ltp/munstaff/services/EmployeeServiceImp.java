@@ -76,7 +76,7 @@ public class EmployeeServiceImp implements EmployeeService {
   public Employee updateEmployeePayGroup(Long employeeId, Long payGroupId) {
     // Verify if an employee exist based on the Id
     Employee employee = getEmployee(employeeId);
-    // Delete the employee PayGroup if a negative Id is passed - This means a delete instruction
+    // Delete the employee PayGroup if a negative PayGroup Id is passed - This means a delete instruction
     if (payGroupId < 0) {
       employee.setPayGroup(null);
       return employeeRepository.save(employee);
