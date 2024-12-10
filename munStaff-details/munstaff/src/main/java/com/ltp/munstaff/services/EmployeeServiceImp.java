@@ -73,18 +73,19 @@ public class EmployeeServiceImp implements EmployeeService {
   };
 
   @Override
-  public Employee updateEmployeePayGroup(Long employeeId, Long payGroupId, String type) {
+  public Employee updateEmployeePayGroup(Long employeeId, Long payGroupId) {
     // Verify if an employee exist based on the Id
     Employee employee = getEmployee(employeeId);
+    // Delete the employee PayGroup if a negative id is passed - This means a delete instruction
+    if (payGroupId < 0) {
+      employee.setPayGroup(null);
+      return employeeRepository.save(employee);
+    }
     // Verify if a payGroup exist based on the Id
     Optional<PayGroup> payGroup = payGroupRepository.findById(payGroupId);
     // Verify if an payGroup was returned based on the findById request
     PayGroup verifiedPayGroup = PayGroupServiceImp.staticFetchPayGroup(payGroup, payGroupId);
 
-    if (type != null && type.equals("delete")) {
-      employee.setPayGroup(null);
-      return employeeRepository.save(employee);
-    }
 
     employee.setPayGroup(verifiedPayGroup);
     return employeeRepository.save(employee);

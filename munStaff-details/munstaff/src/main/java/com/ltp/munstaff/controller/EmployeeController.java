@@ -78,9 +78,8 @@ public class EmployeeController {
   };
 
   @PutMapping("/employee/{employeeId}/paygroup/{payGroupId}/update")
-  public ResponseEntity<?> updateEntityPayGroup(@PathVariable Long employeeId, @PathVariable Long payGroupId,
-      @RequestParam(required = false) String type) {
-    Employee entity = employeeService.updateEmployeePayGroup(employeeId, payGroupId, type);
+  public ResponseEntity<?> updateEntityPayGroup(@PathVariable Long employeeId, @PathVariable Long payGroupId) {
+    Employee entity = employeeService.updateEmployeePayGroup(employeeId, payGroupId);
     SuccessResponse successDetails = new SuccessResponse(true, ConstantResponse.SingleRecordResponse,
         ConstantResponse.SuccessResponse,
         entity);
