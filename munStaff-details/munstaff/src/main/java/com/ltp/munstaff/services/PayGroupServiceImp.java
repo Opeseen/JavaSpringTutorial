@@ -25,7 +25,7 @@ public class PayGroupServiceImp implements PayGroupService {
   PayGroupRepository payGroupRepository;
   EmployeeRepository employeeRepository;
 
-  @Override // SAVE PAY-GROUP
+  @Override // Save payGroup
   public PayGroup savePayGroup(PayGroup payGroup) {
     if (payGroupRepository.existsByCategory(payGroup.getCategory().toLowerCase().trim())) {
       throw new ResourceAlreadyExist("A payGroup category already exist in our record with the name",
@@ -49,7 +49,7 @@ public class PayGroupServiceImp implements PayGroupService {
     return payGroupRepository.save(payGroup);
   };
 
-  @Override // GET PAY-GROUP
+  @Override // Get payGroup
   public PayGroup getPayGroup(Long id) {
     Optional<PayGroup> entity = payGroupRepository.findById(id);
     if (entity.isPresent()) {
@@ -58,18 +58,18 @@ public class PayGroupServiceImp implements PayGroupService {
     throw new NotFoundException("No payGroup found with id", id);
   };
 
-  @Override
+  @Override // Get payGroup Employees
   public Set<Employee> getPayGroupEmployee(Long id) {
     PayGroup payGroup = getPayGroup(id);
     return payGroup.getEmployee();
   };
 
-  @Override // GET ALL PAY-GROUP
+  @Override // Get All payGroup
   public List<PayGroup> getAllPayGroup() {
     return (List<PayGroup>) payGroupRepository.findAll();
   };
 
-  @Override // UPDATE PAY-GROUP
+  @Override // Update payGroup
   public PayGroup updatePayGroup(PayGroup payGroup, Long id) {
     Optional<PayGroup> entity = payGroupRepository.findById(id);
     PayGroup confirmedEntity = staticFetchPayGroup(entity, id);
@@ -101,11 +101,11 @@ public class PayGroupServiceImp implements PayGroupService {
     return payGroupRepository.save(confirmedEntity);
   };
 
-  @Override // DELETE PAY-GROUP
+  @Override // Delete payGroup
   public void deletePayGroup(Long id) {
-    // Confirm if an Employee is attached to a payGroup before deletion
+    // Confirm if any Employee is associated to a payGroup before deletion
     Set<Employee> payGroupEmployee = getPayGroupEmployee(id);
-    if(!payGroupEmployee.isEmpty()){
+    if (!payGroupEmployee.isEmpty()) {
       throw new IllegalStateException("Cannot delete PayGroup with associated Employees");
     }
     payGroupRepository.deleteById(id);
@@ -146,7 +146,7 @@ public class PayGroupServiceImp implements PayGroupService {
     }
   };
 
-  // STATIC FIND PAYGROUP
+  // Static Find PayGroup
   static PayGroup staticFetchPayGroup(Optional<PayGroup> entity, Long id) {
     if (entity.isPresent())
       return entity.get();
