@@ -103,6 +103,11 @@ public class PayGroupServiceImp implements PayGroupService {
 
   @Override // DELETE PAY-GROUP
   public void deletePayGroup(Long id) {
+    // Confirm if an Employee is attached to a payGroup before deletion
+    Set<Employee> payGroupEmployee = getPayGroupEmployee(id);
+    if(!payGroupEmployee.isEmpty()){
+      throw new IllegalStateException("Cannot delete PayGroup with associated Employees");
+    }
     payGroupRepository.deleteById(id);
   };
 

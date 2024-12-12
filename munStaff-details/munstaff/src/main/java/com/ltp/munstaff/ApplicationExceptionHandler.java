@@ -27,8 +27,8 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
   };
 
-  @ExceptionHandler(DataIntegrityViolationException.class)
-  public ResponseEntity<Object> handleDataIntegrityException(DataIntegrityViolationException ex, WebRequest request) {
+  @ExceptionHandler({DataIntegrityViolationException.class, IllegalStateException.class})
+  public ResponseEntity<Object> handleDataIntegrityException(RuntimeException ex, WebRequest request) {
     ErrorResponse errorDetails = new ErrorResponse(true, ex.getMessage(), request.getDescription(false));
     return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
   };
