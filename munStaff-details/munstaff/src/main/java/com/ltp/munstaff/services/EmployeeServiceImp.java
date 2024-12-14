@@ -21,7 +21,7 @@ public class EmployeeServiceImp implements EmployeeService {
   EmployeeRepository employeeRepository;
   PayGroupRepository payGroupRepository;
 
-  @Override // SAVE EMPLOYEE
+  @Override // Create An Employee
   public Employee saveEmployee(Employee employee) {
     if (employeeRepository.existsByEmail(employee.getEmail().toLowerCase().trim())) {
       throw new ResourceAlreadyExist("An employee already exist in our record with the email", employee.getEmail());
