@@ -56,11 +56,12 @@ public class PayGroupController {
     return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };
 
+  // Get all employees in a payGroup
   @GetMapping("/paygroup/{id}/employee")
   public ResponseEntity<?> getEntityEmployee(@PathVariable Long id) {
     Set<Employee> entityEmployee = payGroupService.getPayGroupEmployee(id);
     SuccessResponse successDetails = new SuccessResponse(true, entityEmployee.size(),
-        ConstantResponse.SingleRecordResponse,
+        entityEmployee.isEmpty() ? "No Employee found on this payGroup" : ConstantResponse.SuccessResponse,
         entityEmployee);
     return new ResponseEntity<>(successDetails, HttpStatus.OK);
   };
