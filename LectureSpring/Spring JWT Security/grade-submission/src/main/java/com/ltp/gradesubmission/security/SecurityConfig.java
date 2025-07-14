@@ -29,7 +29,7 @@ public class SecurityConfig {
             .headers(headers -> headers.frameOptions().disable())
             .csrf(csrf -> csrf.disable())
             .authorizeRequests(requests -> requests
-                .antMatchers("/h2/**").permitAll() // New Line: allows us to access the h2 console without the need to authenticate. ' ** '  instead of ' * ' because multiple path levels will follow /h2.
+                .antMatchers("/h2/**").permitAll()
                 .antMatchers(HttpMethod.POST, SecurityConstants.REGISTER_PATH).permitAll()
                 .anyRequest().authenticated())
                 .addFilterBefore(new ExceptionHandlerFilter(), AuthenticationFilter.class)

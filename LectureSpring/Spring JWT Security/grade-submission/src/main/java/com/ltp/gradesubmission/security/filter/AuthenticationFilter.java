@@ -1,6 +1,7 @@
 package com.ltp.gradesubmission.security.filter;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.servlet.FilterChain;
@@ -42,11 +43,18 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
       Authentication authResult) throws IOException, ServletException {
+        LocalDateTime currentTimeStamp = LocalDateTime.now();
         String token = JWT.create()
             .withSubject(authResult.getName())
             .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.TOKEN_EXPIRATION))
             .sign(Algorithm.HMAC512(SecurityConstants.SECRET_KEY));
         response.addHeader(SecurityConstants.AUTHORIZATION, SecurityConstants.BEARER + token);
+        response.setContentType("application/json;charset=UTF-8");
+
+        // construct the json response
+        String JsonResponse = String.format("{\"status\": \"%s\", \"token\": \"%s\", \"timestamp\": \"%s\" }",
+            "success", token, currentTimeStamp);
+        response.getWriter().write(JsonResponse);
     }
 
     @Override
